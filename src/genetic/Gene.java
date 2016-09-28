@@ -7,7 +7,7 @@ import emc.Sala;
 /**
  * Class gene
  */
-public class gene {
+public class Gene {
 
   //
   // Fields
@@ -19,7 +19,11 @@ public class gene {
   //
   // Constructors
   //
-  public gene () { };
+  public Gene () { };
+  public Gene (Sala sala, Disciplina disciplina) {
+	  this.sala=sala;
+	  this.disciplina=disciplina;
+  };
   
   //
   // Methods
@@ -34,7 +38,7 @@ public class gene {
    * Set the value of sala
    * @param newVar the new value of sala
    */
-  private void setSala (Sala sala) {
+  public void setSala (Sala sala) {
     this.sala = sala;
   }
 
@@ -42,7 +46,7 @@ public class gene {
    * Get the value of sala
    * @return the value of sala
    */
-  private Sala getSala () {
+  public Sala getSala () {
     return sala;
   }
 
@@ -50,7 +54,7 @@ public class gene {
    * Set the value of disciplina
    * @param newVar the new value of disciplina
    */
-  private void setDisciplina (Disciplina disciplina) {
+  public void setDisciplina (Disciplina disciplina) {
     this.disciplina = disciplina;
   }
 
@@ -58,7 +62,7 @@ public class gene {
    * Get the value of disciplina
    * @return the value of disciplina
    */
-  private Disciplina getDisciplina () {
+  public Disciplina getDisciplina () {
     return disciplina;
   }
 
