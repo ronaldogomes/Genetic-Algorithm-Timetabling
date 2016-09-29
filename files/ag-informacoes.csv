@@ -1,4 +1,22 @@
 //
+// Este arquivo contém informações de entrada, fornecidas pelo usuário, 
+// que representam as especificações da instância do University Course
+// TimeTabling Problem (UCTTP) a ser resolvida pelo Algoritmo Genético.
+// 
+// As seguintes seções estão presentes, sempre nesta ordem:
+//    TIMESLOT
+//    CURSO
+//    TIPO DE SALA
+//    SALA 
+//    DISCIPLINA
+//    ESTUDANTE
+//    PROFESSOR
+//
+// Timeslot: código do timeslot
+//           dia da semana
+//           horário de início  do timeslot
+//           horário de término do timeslot
+// 
 TIMESLOT
   1,1,00:00,00:59
   2,1,01:00,01:59
@@ -169,10 +187,18 @@ TIMESLOT
 167,7,22:00,22:59
 168,7,23:00,23:59
 //
+// Curso: código do curso
+//        nome oficial do curso
+//        número de períodos que formam o curso
+//        turnos de funcionamento do curso
+//
 CURSO
-1, Engenhariada Computação, 12, 5
+1, Engenharia da Computação, 12, 5
 2, Engenharia Elétrica, 10, 7
 3, Engenharia Mecânica, 10, 3
+//
+// Tipo de Sala: código do tipo de sala
+//               descrição do tipo de sala
 //
 TIPO DE SALA
 1, Sala Comum
@@ -180,6 +206,10 @@ TIPO DE SALA
 3, Laboratório Específico 
 4, Outro tipo
 //
+// Sala: código da sala
+//       descrição da sala (nome de identificação)
+//       tipo da sala (veja a seção anterior)
+//       capacidade (número máximo de estudantes que a sala pode atender)
 SALA
   1, Sala 01, 1, 50
   2, Sala 02, 1, 50
@@ -212,37 +242,52 @@ SALA
  29, Sala 19, 4, 30
  30, Sala 20, 4, 30
 //
+// Disciplina: código da disciplina
+//             código do curso ao qual a disciplina está vinculada
+//             código do período, no curso, ao qual a disciplina está vinculada
+//             carga horária semanal de aulas teóricas da disciplina
+//             tipo de sala necessário para as aulas teóricas da disciplina
+//             carga horária semanal de aulas práticas da disciplina
+//             tipo de sala necessário para as aulas práticas da disciplina
+//
 DISCIPLINA
- 1, 1, Disc 001, 4, 1, 0, 0
- 2, 1, Disc 002, 2, 1, 2, 2
- 3, 1, Disc 003, 4, 1, 0, 0
- 4, 1, Disc 004, 0, 0, 4, 2
- 5, 1, Disc 005, 0, 0, 4, 4
- 6, 1, Disc 006, 4, 1, 0, 0
- 7, 1, Disc 007, 2, 1, 2, 3
- 8, 1, Disc 008, 2, 1, 2, 3
- 9, 1, Disc 009, 0, 0, 4, 3
-10, 1, Disc 010, 2, 1, 2, 4
-11, 2, Disc 011, 4, 1, 0, 0
-12, 2, Disc 012, 2, 1, 2, 2
-13, 2, Disc 013, 4, 1, 0, 0
-14, 2, Disc 014, 0, 0, 4, 2
-15, 2, Disc 015, 0, 0, 4, 4
-16, 2, Disc 016, 4, 1, 0, 0
-17, 2, Disc 017, 2, 1, 2, 3
-18, 2, Disc 018, 2, 1, 2, 3
-19, 2, Disc 019, 0, 0, 4, 3
-20, 2, Disc 020, 2, 1, 2, 4
-21, 3, Disc 021, 2, 1, 0, 0
-22, 3, Disc 022, 2, 1, 2, 3
-23, 3, Disc 023, 2, 1, 2, 2
-24, 3, Disc 024, 0, 0, 4, 2
-25, 3, Disc 025, 0, 0, 4, 4
-26, 3, Disc 026, 4, 1, 0, 0
-27, 3, Disc 027, 2, 1, 2, 2
-28, 3, Disc 028, 2, 1, 2, 3
-29, 3, Disc 029, 0, 0, 4, 3
-30, 3, Disc 030, 2, 1, 2, 4
+ 1, 1, 1, Disc 001, 4, 1, 0, 0
+ 2, 1, 2, Disc 002, 2, 1, 2, 2
+ 3, 1, 3, Disc 003, 4, 1, 0, 0
+ 4, 1, 3, Disc 004, 0, 0, 4, 2
+ 5, 1, 4, Disc 005, 0, 0, 4, 4
+ 6, 1, 5, Disc 006, 4, 1, 0, 0
+ 7, 1, 6, Disc 007, 2, 1, 2, 3
+ 8, 1, 7, Disc 008, 2, 1, 2, 3
+ 9, 1, 8, Disc 009, 0, 0, 4, 3
+10, 1, 9, Disc 010, 2, 1, 2, 4
+11, 2, 1, Disc 011, 4, 1, 0, 0
+12, 2, 2, Disc 012, 2, 1, 2, 2
+13, 2, 3, Disc 013, 4, 1, 0, 0
+14, 2, 4, Disc 014, 0, 0, 4, 2
+15, 2, 5, Disc 015, 0, 0, 4, 4
+16, 2, 6, Disc 016, 4, 1, 0, 0
+17, 2, 7, Disc 017, 2, 1, 2, 3
+18, 2, 8, Disc 018, 2, 1, 2, 3
+19, 2, 9, Disc 019, 0, 0, 4, 3
+20, 2,10, Disc 020, 2, 1, 2, 4
+21, 3, 1, Disc 021, 2, 1, 0, 0
+22, 3, 2, Disc 022, 2, 1, 2, 3
+23, 3, 3, Disc 023, 2, 1, 2, 2
+24, 3, 4, Disc 024, 0, 0, 4, 2
+25, 3, 5, Disc 025, 0, 0, 4, 4
+26, 3, 6, Disc 026, 4, 1, 0, 0
+27, 3, 7, Disc 027, 2, 1, 2, 2
+28, 3, 8, Disc 028, 2, 1, 2, 3
+29, 3, 9, Disc 029, 0, 0, 4, 3
+30, 3,10, Disc 030, 2, 1, 2, 4
+//
+// Estudante: código do estudante
+//            nome completo do estudante
+//            [código da disciplina a ser cursada]: sequência de códigos
+//               das disciplinas que o estudante deve cursar naquele 
+//               período letivo.
+//               São, no máximo, dez disciplinas.
 //
 ESTUDANTE
   1, Estud 001, 1, 2, 4. 7
@@ -306,6 +351,11 @@ ESTUDANTE
  59, Estud 059, 21, 27, 30
  60, Estud 060, 12, 14
 //
+// Professor: código do professor
+//            nome do professor
+//            [código de disciplina]: códigos das disciplinas que o professor
+//               está apto a ministrar naquele período letivo.
+//
 PROFESSOR
  1, Prof 001, 1, 2, 4
  2, Prof 002, 3, 
@@ -337,3 +387,6 @@ PROFESSOR
 28, Prof 028, 25, 29
 29, Prof 029, 23, 26, 27
 30, Prof 030, 21, 26, 28
+//
+// Fim do arquivo de informações
+//
