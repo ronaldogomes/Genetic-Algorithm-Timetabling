@@ -42,26 +42,43 @@ public class Arquivo {
 		System.out.println();
 		return retorno;
 	}
-
-	public void informacoesAg(ArrayList<String> entr,
+	/**
+	 * 
+	 * @param infgormEntrArq	-ArrayList com conteudo do arquivo ag-informacoes.csv
+	 * @param cursosEMC			-ArrayList a ser carregado com os cursos descrito no ag-informacoes.csv				
+	 * @param DisciplinasEMC	-ArrayList a ser carregado com as disciplinas descrito no ag-informacoes.csv	
+	 * @param alunosEMC			-ArrayList a ser carregado com os alunos descrito no ag-informacoes.csv	
+	 * @param professoresEMC	-ArrayList a ser carregado com os professores descrito no ag-informacoes.csv	
+	 * @param salasEMC			-ArrayList a ser carregado com as salas descrito no ag-informacoes.csv	
+	 * @param listaTimeSlots	-ArrayList a ser carregado com os timeslots descrito no ag-informacoes.csv	
+	 * @param tipoSalaEMC		-ArrayList a ser carregado com os tipos de sala descrito no ag-informacoes.csv	
+	 * <h2>Descrição</h2>
+	 * <p>Este metodo recebe o arquivo em forma de ArrayList e carrega os objetos nos ArrayLists tambem passados
+	 * por parâmetros. Ao final todos os objetos descritos no arquivo está em uma das arraylist que foi passado
+	 * por parâmetro.</p>
+	 * <h3>Usando o método</h3>
+	 * <p>	1° carregue o arquivo ag-informacoes.csv em um ArrayList<String> através do método lerArquivo
+	 * 		2°Crie os arraylists as ser passado por parametro<p/>
+	 */
+	public void informacoesAg(ArrayList<String> infgormEntrArq,
 			ArrayList<Curso> cursosEMC, ArrayList<Disciplina> DisciplinasEMC,
 			ArrayList<Estudante> alunosEMC,
 			ArrayList<Professor> professoresEMC, ArrayList<Sala> salasEMC,
 			ArrayList<TimeSlots> listaTimeSlots, ArrayList<TipoSala> tipoSalaEMC) {
-		for (int i = 0; i < entr.size(); i++) {
-			if (!(entr.get(i).matches("//\\w{0,}|//d{0,}"))) {
-				switch (entr.get(i)) {
+		for (int i = 0; i < infgormEntrArq.size(); i++) {
+			if (!(infgormEntrArq.get(i).matches("//\\w{0,}|//d{0,}"))) {
+				switch (infgormEntrArq.get(i)) {
 				case "TIMESLOT":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\d{1,3}\\s{0,},\\s{0,}\\d\\s{0,},\\s{0,}\\d{1,2}\\s{0,}:\\s{0,}\\d{1,2},\\d{1,2}:\\d{1,2}")) {
-							Integer codigo = Integer.parseInt(entr.get(i)
+							Integer codigo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[0]);
-							Integer codDiaSemana = Integer.parseInt(entr.get(i)
+							Integer codDiaSemana = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[1]);
-							String horaIncioFim = entr.get(i).split(",")[2]
-									+ "," + entr.get(i).split(",")[2];
+							String horaIncioFim = infgormEntrArq.get(i).split(",")[2]
+									+ "," + infgormEntrArq.get(i).split(",")[2];
 							listaTimeSlots.add(new TimeSlots(codigo,
 									codDiaSemana, horaIncioFim));// ARRAY DE
 																	// OBJETOS
@@ -70,19 +87,19 @@ public class Arquivo {
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("CURSO"));
+					} while (!infgormEntrArq.get(i).matches("CURSO"));
 				case "CURSO":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\d\\s{0,},\\s{0,}[\\W|\\w]{1,}\\s{0,},\\s{0,}\\d{1,2}\\s{0,},\\s{0,}\\d")) {
-							int codigo = Integer.parseInt(entr.get(i)
+							int codigo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[0]);
-							String nome = entr.get(i).split(",")[1];
-							int numPeriodo = Integer.parseInt(entr.get(i)
+							String nome = infgormEntrArq.get(i).split(",")[1];
+							int numPeriodo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[2].trim());
 							int turno = Integer
-									.parseInt(entr.get(i).split(",")[3].trim());
+									.parseInt(infgormEntrArq.get(i).split(",")[3].trim());
 
 							cursosEMC.add(new Curso(codigo, nome, numPeriodo,
 									turno));
@@ -90,30 +107,30 @@ public class Arquivo {
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("TIPO DE SALA"));
+					} while (!infgormEntrArq.get(i).matches("TIPO DE SALA"));
 				case "TIPO DE SALA":
 					do {
-						if (entr.get(i).matches(
+						if (infgormEntrArq.get(i).matches(
 								"\\d\\s{0,},\\s{0,}[\\w|\\W]{0,}\\s{0,}")) {
-							tipoSalaEMC.add(new TipoSala(Integer.parseInt(entr
-									.get(i).split(",")[0]), entr.get(i).split(
+							tipoSalaEMC.add(new TipoSala(Integer.parseInt(infgormEntrArq
+									.get(i).split(",")[0]), infgormEntrArq.get(i).split(
 									",")[1]));
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("SALA"));
+					} while (!infgormEntrArq.get(i).matches("SALA"));
 				case "SALA":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}")) {
-							int codigo = Integer.parseInt(entr.get(i)
+							int codigo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[0]);
-							String descricao = entr.get(i).split(",")[1].trim();
+							String descricao = infgormEntrArq.get(i).split(",")[1].trim();
 							TipoSala tipoSala = tipoSalaEMC
-									.get(Integer.parseInt(entr.get(i)
+									.get(Integer.parseInt(infgormEntrArq.get(i)
 											.split(",")[2].trim()) - 1);
-							int capacidade = Integer.parseInt(entr.get(i)
+							int capacidade = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[3].trim());
 							salasEMC.add(new Sala(codigo, descricao, tipoSala,
 									capacidade));
@@ -121,27 +138,27 @@ public class Arquivo {
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("DISCIPLINA"));
+					} while (!infgormEntrArq.get(i).matches("DISCIPLINA"));
 				case "DISCIPLINA":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\W|\\w|\\d]{1,}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}\\s{0,},\\s{0,}\\d{1,3}\\s{0,}")) {
 
-							int codigo = Integer.parseInt(entr.get(i)
+							int codigo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[0].trim());
-							int codigoCurso = Integer.parseInt(entr.get(i)
+							int codigoCurso = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[1].trim());
-							int codigoPeriodo = Integer.parseInt(entr.get(i)
+							int codigoPeriodo = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[2].trim());
-							String descricao = entr.get(i).split(",")[3].trim();
-							int cargaHorariaTeorica = Integer.parseInt(entr
+							String descricao = infgormEntrArq.get(i).split(",")[3].trim();
+							int cargaHorariaTeorica = Integer.parseInt(infgormEntrArq
 									.get(i).split(",")[4].trim());
-							int tipoSalaTeoria = Integer.parseInt(entr.get(i)
+							int tipoSalaTeoria = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[5].trim());
-							int cargaHorariaPratica = Integer.parseInt(entr
+							int cargaHorariaPratica = Integer.parseInt(infgormEntrArq
 									.get(i).split(",")[6].trim());
-							int tipoSalaPratica = Integer.parseInt(entr.get(i)
+							int tipoSalaPratica = Integer.parseInt(infgormEntrArq.get(i)
 									.split(",")[7].trim());
 
 							DisciplinasEMC.add(new Disciplina(codigo,
@@ -152,27 +169,39 @@ public class Arquivo {
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("ESTUDANTE"));
+					} while (!infgormEntrArq.get(i).matches("ESTUDANTE"));
 				case "ESTUDANTE":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,},\\s{0,}[\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-							// CRIAR ARRAY DE OBJETOS ESTUDANTE
+							int codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim());
+							String nome = infgormEntrArq.get(i).split(",")[1].trim();
+							ArrayList<Disciplina> disciplinasCursar = new ArrayList<Disciplina>();
+							for (int j = 2; j < infgormEntrArq.get(i).split(",").length-1; j++) {
+								disciplinasCursar.add(DisciplinasEMC.get(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+							}
+							alunosEMC.add(new Estudante(codigo, nome, disciplinasCursar));
 						}
 						//
 						i++;
-					} while (!entr.get(i).matches("PROFESSOR"));
+					} while (!infgormEntrArq.get(i).matches("PROFESSOR"));
 				case "PROFESSOR":
 					do {
-						if (entr.get(i)
+						if (infgormEntrArq.get(i)
 								.matches(
 										"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,},\\s{0,}[\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-							// CRIAR ARRAY DE OBJETOS PROFESSOR
+							int codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim());
+							String nome = infgormEntrArq.get(i).split(",")[1].trim();
+							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
+							for (int j = 2; j < infgormEntrArq.get(i).split(",").length-1; j++) {
+								disciplinasMinistrar.add(DisciplinasEMC.get(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+							}
+							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}
 						//
 						i++;
-					} while (i < entr.size());
+					} while (i < infgormEntrArq.size());
 				}
 
 			}
