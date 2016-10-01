@@ -22,7 +22,6 @@ public class Gene {
   private Professor professor;
   private Sala sala;
   private TimeSlots timeslots;
-  private String geneEncoded = "";
  
   //
   // Constructors

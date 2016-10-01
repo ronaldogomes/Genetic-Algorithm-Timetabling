@@ -1,11 +1,6 @@
 package genetic;
 
-import emc.Curso;
-import emc.Disciplina;
-import emc.Estudante;
-import emc.Professor;
-import emc.Sala;
-import emc.TimeSlots;
+
 
 public class Populacao {
 	
