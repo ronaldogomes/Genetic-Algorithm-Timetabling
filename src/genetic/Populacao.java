@@ -1,15 +1,23 @@
 package genetic;
 
+import emc.Curso;
+import emc.Disciplina;
+import emc.Estudante;
+import emc.Professor;
+import emc.Sala;
+import emc.TimeSlots;
+
 public class Populacao {
 	
 	private int sizePopulation;
 	private int fitness;
 	Gene gene[];
 	
-	Populacao(int sizePopulation){
+	Populacao(int sizePopulation,Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots){
+		
 		this.setSizePopulation(sizePopulation);
 		for (int i =0;i<sizePopulation;i++){
-			gene[i] = new Gene();	
+			gene[i] = new Gene(sala, disciplina,estudante,professor,curso,timeslots);	
 		}
 		
 	}
