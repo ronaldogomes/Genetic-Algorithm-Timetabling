@@ -13,11 +13,11 @@ public class Populacao {
 	private int fitness;
 	Gene gene[];
 	
-	Populacao(int sizePopulation,Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots){
+	Populacao(int sizePopulation){
 		
 		this.setSizePopulation(sizePopulation);
 		for (int i =0;i<sizePopulation;i++){
-			gene[i] = new Gene(sala, disciplina,estudante,professor,curso,timeslots);	
+			gene[i] = new Gene();	
 		}
 		
 	}

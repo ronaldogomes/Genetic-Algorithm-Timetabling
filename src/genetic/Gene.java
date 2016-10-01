@@ -22,6 +22,7 @@ public class Gene {
   private Professor professor;
   private Sala sala;
   private TimeSlots timeslots;
+  private String geneEncoded = "";
  
   //
   // Constructors
@@ -32,10 +33,10 @@ public class Gene {
 	  this.setEstudante(estudante);
 	  this.setProfessor(professor);
 	  this.setCurso(curso);
-	  this.setTimeslots(timeslots);
-	  
-	  
+	  this.setTimeslots(timeslots);  
   };
+  public Gene(){	  
+  }
   
   //
   // Methods
