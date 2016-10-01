@@ -24,19 +24,18 @@ public class Cromossomo {
   private ArrayList<Professor> professorArray;
   private ArrayList<Sala> salaArray;
   private ArrayList<TimeSlots> timeslotsArray;
-  private int index = 0 ;
  
   //
   // Constructors
   //
-  public Cromossomo(Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots) {
+  public Cromossomo(int index,Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots) {
 	  cursoArray.add(index,curso);
 	  disciplinaArray.add(index,disciplina);
 	  estudanteArray.add(index,estudante);
 	  professorArray.add(index,professor);
 	  salaArray.add(index,sala);
 	  timeslotsArray.add(index,timeslots);
-	  index++;
+
   };
   public Cromossomo(){	  
   }
