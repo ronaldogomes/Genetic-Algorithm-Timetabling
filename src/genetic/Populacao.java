@@ -5,7 +5,6 @@ package genetic;
 public class Populacao {
 	
 	private int sizePopulation;
-	private int fitness;
 	Gene gene[];
 	
 	Populacao(int sizePopulation){
@@ -25,10 +24,7 @@ public class Populacao {
 		this.sizePopulation = sizePopulation;
 	}
 
-	public int getFitness(Populacao populacao){
-			for(int i=0;i<populacao.gene.length;i++){
-			}
-		return fitness;
+
 	}
 
 }

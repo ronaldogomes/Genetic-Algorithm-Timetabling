@@ -22,6 +22,7 @@ public class Gene {
   private Professor professor;
   private Sala sala;
   private TimeSlots timeslots;
+  private int fitness;
  
   //
   // Constructors
@@ -40,8 +41,9 @@ public class Gene {
   //
   // Methods
   //
-
-
+  public int getFitness(){
+	return fitness;
+  }
   //
   // Accessor methods
   //
