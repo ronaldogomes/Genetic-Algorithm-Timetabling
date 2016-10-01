@@ -24,7 +24,7 @@ public class Populacao {
 		this.sizePopulation = sizePopulation;
 	}
 
-
+}
 	
 
 
