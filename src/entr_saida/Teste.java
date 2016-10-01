@@ -11,7 +11,11 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
+<<<<<<< HEAD
 import genetic.Cromossomo;
+=======
+import genetic.*;
+>>>>>>> refs/remotes/origin/master
 
 public class Teste {
 
