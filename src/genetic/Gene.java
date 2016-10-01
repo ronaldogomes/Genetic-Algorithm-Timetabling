@@ -1,6 +1,10 @@
 package genetic;
+import emc.Curso;
 import emc.Disciplina;
+import emc.Estudante;
+import emc.Professor;
 import emc.Sala;
+import emc.TimeSlots;
 
 
 
@@ -12,17 +16,25 @@ public class Gene {
   //
   // Fields
   //
-
-  private Sala sala;
+  private Curso curso;
   private Disciplina disciplina;
-  
+  private Estudante estudante;
+  private Professor professor;
+  private Sala sala;
+  private TimeSlots timeslots;
+ 
   //
   // Constructors
   //
-  public Gene () { };
-  public Gene (Sala sala, Disciplina disciplina) {
-	  this.sala=sala;
-	  this.disciplina=disciplina;
+  public Gene(Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots) {
+	  this.setSala(sala);
+	  this.setDisciplina(disciplina);
+	  this.setEstudante(estudante);
+	  this.setProfessor(professor);
+	  this.setCurso(curso);
+	  this.setTimeslots(timeslots);
+	  
+	  
   };
   
   //
@@ -62,9 +74,33 @@ public class Gene {
    * Get the value of disciplina
    * @return the value of disciplina
    */
-  public Disciplina getDisciplina () {
+ public Disciplina getDisciplina () {
     return disciplina;
   }
+public Curso getCurso() {
+	return curso;
+}
+public void setCurso(Curso curso) {
+	this.curso = curso;
+}
+public Estudante getEstudante() {
+	return estudante;
+}
+public void setEstudante(Estudante estudante) {
+	this.estudante = estudante;
+}
+public Professor getProfessor() {
+	return professor;
+}
+public void setProfessor(Professor professor) {
+	this.professor = professor;
+}
+public TimeSlots getTimeslots() {
+	return timeslots;
+}
+public void setTimeslots(TimeSlots timeslots) {
+	this.timeslots = timeslots;
+}
 
   //
   // Other methods
