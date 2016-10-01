@@ -5,13 +5,13 @@ package genetic;
 public class Populacao {
 	
 	private int sizePopulation;
-	Gene gene[];
+	Cromossomo cromossomo[];
 	
 	Populacao(int sizePopulation){
 		
 		this.setSizePopulation(sizePopulation);
 		for (int i =0;i<sizePopulation;i++){
-			gene[i] = new Gene();	
+			cromossomo[i] = new Cromossomo();	
 		}
 		
 	}
@@ -27,4 +27,4 @@ public class Populacao {
 
 	}
 
-}
+
