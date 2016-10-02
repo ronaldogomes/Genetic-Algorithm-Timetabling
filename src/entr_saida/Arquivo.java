@@ -42,23 +42,44 @@ public class Arquivo {
 		System.out.println();
 		return retorno;
 	}
+
 	/**
 	 * 
-	 * @param infgormEntrArq	-ArrayList com conteudo do arquivo ag-informacoes.csv
-	 * @param cursosEMC			-ArrayList a ser carregado com os cursos descrito no ag-informacoes.csv				
-	 * @param DisciplinasEMC	-ArrayList a ser carregado com as disciplinas descrito no ag-informacoes.csv	
-	 * @param alunosEMC			-ArrayList a ser carregado com os alunos descrito no ag-informacoes.csv	
-	 * @param professoresEMC	-ArrayList a ser carregado com os professores descrito no ag-informacoes.csv	
-	 * @param salasEMC			-ArrayList a ser carregado com as salas descrito no ag-informacoes.csv	
-	 * @param listaTimeSlots	-ArrayList a ser carregado com os timeslots descrito no ag-informacoes.csv	
-	 * @param tipoSalaEMC		-ArrayList a ser carregado com os tipos de sala descrito no ag-informacoes.csv	
-	 * <h2>Descrição</h2>
-	 * <p>Este metodo recebe o arquivo em forma de ArrayList e carrega os objetos nos ArrayLists tambem passados
-	 * por parâmetros. Ao final todos os objetos descritos no arquivo está em uma das arraylist que foi passado
-	 * por parâmetro.</p>
-	 * <h3>Usando o método</h3>
-	 * <p>	1° carregue o arquivo ag-informacoes.csv em um ArrayList<String> através do método lerArquivo
-	 * 		2°Crie os arraylists as ser passado por parametro<p/>
+	 * @param infgormEntrArq
+	 *            -ArrayList com conteudo do arquivo ag-informacoes.csv
+	 * @param cursosEMC
+	 *            -ArrayList a ser carregado com os cursos descrito no
+	 *            ag-informacoes.csv
+	 * @param DisciplinasEMC
+	 *            -ArrayList a ser carregado com as disciplinas descrito no
+	 *            ag-informacoes.csv
+	 * @param alunosEMC
+	 *            -ArrayList a ser carregado com os alunos descrito no
+	 *            ag-informacoes.csv
+	 * @param professoresEMC
+	 *            -ArrayList a ser carregado com os professores descrito no
+	 *            ag-informacoes.csv
+	 * @param salasEMC
+	 *            -ArrayList a ser carregado com as salas descrito no
+	 *            ag-informacoes.csv
+	 * @param listaTimeSlots
+	 *            -ArrayList a ser carregado com os timeslots descrito no
+	 *            ag-informacoes.csv
+	 * @param tipoSalaEMC
+	 *            -ArrayList a ser carregado com os tipos de sala descrito no
+	 *            ag-informacoes.csv <h2>Descrição</h2>
+	 *            <p>
+	 *            Este metodo recebe o arquivo em forma de ArrayList e carrega
+	 *            os objetos nos ArrayLists tambem passados por parâmetros. Ao
+	 *            final todos os objetos descritos no arquivo está em uma das
+	 *            arraylist que foi passado por parâmetro.
+	 *            </p>
+	 *            <h3>Usando o método</h3>
+	 *            <p>
+	 *            1° carregue o arquivo ag-informacoes.csv em um
+	 *            ArrayList<String> através do método lerArquivo 2°Crie os
+	 *            arraylists as ser passado por parametro
+	 *            <p/>
 	 */
 	public void informacoesAg(ArrayList<String> infgormEntrArq,
 			ArrayList<Curso> cursosEMC, ArrayList<Disciplina> DisciplinasEMC,
@@ -165,7 +186,6 @@ public class Arquivo {
 									codigoCurso, codigoPeriodo, descricao,
 									cargaHorariaTeorica, tipoSalaTeoria,
 									cargaHorariaPratica, tipoSalaPratica));
-							// CRIAR ARRAY DE OBJETOS DISCIPLINA
 						}
 						//
 						i++;
@@ -175,13 +195,11 @@ public class Arquivo {
 						if (infgormEntrArq.get(i)
 								.matches(
 										"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,},\\s{0,}[\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-							int codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim());
-							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasCursar = new ArrayList<Disciplina>();
-							for (int j = 2; j < infgormEntrArq.get(i).split(",").length-1; j++) {
-								disciplinasCursar.add(DisciplinasEMC.get(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
+								disciplinasCursar.add(Disciplina.qualDisciplina(DisciplinasEMC, Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
-							alunosEMC.add(new Estudante(codigo, nome, disciplinasCursar));
+							alunosEMC.add(new Estudante(Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim()), infgormEntrArq.get(i).split(",")[1].trim(), disciplinasCursar));
 						}
 						//
 						i++;
@@ -194,8 +212,8 @@ public class Arquivo {
 							int codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim());
 							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
-							for (int j = 2; j < infgormEntrArq.get(i).split(",").length-1; j++) {
-								disciplinasMinistrar.add(DisciplinasEMC.get(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
+								disciplinasMinistrar.add(Disciplina.qualDisciplina(DisciplinasEMC, Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}

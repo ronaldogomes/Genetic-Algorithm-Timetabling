@@ -35,35 +35,83 @@ public class Teste {
 		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
 				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
 				tipoSalaEMC);
-		for (int i = 0; i < salasEMC.size(); i++) {
-			System.out.println("SALA " + 1 + i);
-			System.out.println("codigo: " + salasEMC.get(i).getCodigo()
-					+ "\ntipo de sala : "
-					+ salasEMC.get(i).getTipoSala().getDescricao()
-					+ "\ncapacidade da sala: "
-					+ salasEMC.get(i).getCapacidade()
-					+ "\nhorarios disponiveis : "
-					+ salasEMC.get(i).getHorariosDisponiveis() + "\n\n");
+		
+//		IMPRIME OS ARRAYS DOS OBJETOS CARREGADOS DO ARQUIVO ag-informacoes.csv		
+//		imprimeArrayAlunos(alunosEMC);
+//		imprimeArrayCursos(cursosEMC);
+//		imprimeArrayDisciplinas(DisciplinasEMC);
+		imprimeArrayProfessores(professoresEMC);
+//		imprimeArraySalas(salasEMC);
+//		imprimeArrayTimesSlots(tipoSalaEMC);
+//		imprimeArrayTipoSala(tipoSalaEMC);
+
+	}
+
+	// metodos
+	public static void imprimeArrayCursos(ArrayList<Curso> cursos) {
+		for (int i = 0; i < cursos.size(); i++) {
+			System.out.println(cursos.get(i).getCodigo() + ", "
+					+ cursos.get(i).getNome() + ","
+					+ cursos.get(i).getNumPeriodo() + ","
+					+ cursos.get(i).getTurno());
+
 		}
 
-		// ArrayList<Disciplina> disc = new ArrayList<Disciplina>();
-		// disc.add(new Disciplina(01, 01, "Desc", 64, 0, 0, 0));
-		// Estudante aluno = new Estudante(01, "Chaib", disc);
-		//
-		// String nome =
-		// "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
-		// Arquivo arquivo = new Arquivo();
-		// ArrayList<String> linhaPorLinha = arquivo.lerArquivo(nome);
-		// for (int i = 0; i < linhaPorLinha.size(); i++) {
-		// // System.out.println(linhaPorLinha.get(i));
-		// }
-		// ArrayList<TimeSlots> timeSlots =
-		// arquivo.informacoesAg(linhaPorLinha);
-		// for (int i = 0; i < timeSlots.size(); i++) {
-		// //
-		// System.out.println("Codigo TimeSlot: "+timeSlots.get(i).getCodigo()+"|  codigoDiaSemana :"+timeSlots.get(i).getCodDiaSemana());
-		//
-		// }
+	}
+
+	public static void imprimeArrayDisciplinas(ArrayList<Disciplina> disciplinas) {
+		for (int i = 0; i < disciplinas.size(); i++) {
+			System.out.println(disciplinas.get(i).getCodigo() + ","
+					+ disciplinas.get(i).getCodigoCurso() + ","
+					+ disciplinas.get(i).getCodigPeriodo() + ","
+					+ disciplinas.get(i).getDescricao() + ","
+					+ disciplinas.get(i).getCargaHorariaTeorica() + ","
+					+ disciplinas.get(i).getTipoSalaTeoria() + ","
+					+ disciplinas.get(i).getCargaHorariaPratica() + ","
+					+ disciplinas.get(i).getTipoSalaPratica());
+		}
+		
+
+	}
+
+	public static void imprimeArrayAlunos(ArrayList<Estudante> alunos) {
+		for (int i = 0; i < alunos.size(); i++) {
+			System.out.print(alunos.get(i).getCodigo()+","+alunos.get(i).getNome());
+			for (int j = 0; j < alunos.get(i).getDisciplinasCursar().size(); j++) {
+				System.out.print(","+alunos.get(i).getDisciplinasCursar().get(j).getCodigo());
+			}
+			System.out.println("");
+		}
+
+	}
+
+	public static void imprimeArrayProfessores(ArrayList<Professor> professores) {
+		for (int i = 0; i < professores.size(); i++) {
+			System.out.print(professores.get(i).getCodigo()+","+professores.get(i).getNome());
+			for (int j = 0; j < professores.get(i).getDisciplinasMinist().size(); j++) {
+				System.out.print(","+professores.get(i).getDisciplinasMinist().get(j).getCodigo());
+			}
+			System.out.println("");
+		}
+
+	}
+
+	public static void imprimeArraySalas(ArrayList<Sala> salas) {
+		for (int i = 0; i < salas.size(); i++) {
+			System.out.println(salas.get(i).getCodigo()+","+salas.get(i).getDescricao()+","+salas.get(i).getTipoSala().getCodigo()+","+salas.get(i).getCapacidade());
+		}
+	}
+
+	public static void imprimeArrayTimesSlots(ArrayList<TipoSala> timeSlots) {
+		for (int i = 0; i < timeSlots.size(); i++) {
+			System.out.println(timeSlots.get(i).getCodigo()+","+timeSlots.get(i).getDescricao()+","+timeSlots.get(i)+" configurar horairo de inicio e fim");
+		}
+	}
+
+	public static void imprimeArrayTipoSala(ArrayList<TipoSala> tipoSalas) {
+		for (int i = 0; i < tipoSalas.size(); i++) {
+			System.out.println(tipoSalas.get(i).getCodigo()+","+tipoSalas.get(i).getDescricao());
+		}
 	}
 
 }

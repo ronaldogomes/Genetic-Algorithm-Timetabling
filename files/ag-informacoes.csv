@@ -290,7 +290,7 @@ DISCIPLINA
 //               São, no máximo, dez disciplinas.
 //
 ESTUDANTE
-  1, Estud 001, 1, 2, 4. 7
+  1, Estud 001, 1, 2, 4, 7
   2, Estud 002, 2, 4, 9, 
   3, Estud 003, 1, 5, 8, 9
   4, Estud 004, 3, 5, 7
