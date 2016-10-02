@@ -49,7 +49,9 @@ public class Teste {
 
 	}
 
-	// metodos
+	// 
+	//METODOS
+	//
 	public static void imprimeArrayCursos(ArrayList<Curso> cursos) {
 		for (int i = 0; i < cursos.size(); i++) {
 			System.out.println(cursos.get(i).getCodigo() + ", "
