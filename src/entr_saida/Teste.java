@@ -11,7 +11,9 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
-import genetic.Gene;
+import genetic.Cromossomo;
+
+
 
 public class Teste {
 
