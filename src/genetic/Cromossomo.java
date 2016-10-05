@@ -1,5 +1,10 @@
 package genetic;
+
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Random;
 
 import emc.Curso;
 import emc.Disciplina;
@@ -8,50 +13,72 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 
-
-
 /**
  * Class gene
  */
 public class Cromossomo {
 
-  //
-  // Fields
-  //
-  private ArrayList<Curso> cursoArray;
-  private ArrayList<Disciplina> disciplinaArray;
-  private ArrayList<Estudante> estudanteArray;
-  private ArrayList<Professor> professorArray;
-  private ArrayList<Sala> salaArray;
-  private ArrayList<TimeSlots> timeslotsArray;
- 
-  //
-  // Constructors
-  //
-  public Cromossomo(int index,Sala sala, Disciplina disciplina,Estudante estudante,Professor professor,Curso curso,TimeSlots timeslots) {
-	  cursoArray.add(index,curso);
-	  disciplinaArray.add(index,disciplina);
-	  estudanteArray.add(index,estudante);
-	  professorArray.add(index,professor);
-	  salaArray.add(index,sala);
-	  timeslotsArray.add(index,timeslots);
+	//
+	// Fields
+	//
+	private Hashtable<Integer, ArrayList<Gene>> cromossomoHash;;
 
-  };
-  public Cromossomo(){	  
-  }
-  
-  //
-  // Methods
-  //
+	//
+	// Constructor
+	//
+	public Cromossomo() {
+		this.cromossomoHash =  new Hashtable<Integer, ArrayList<Gene>>();
+	}
 
-  //
-  // Accessor methods
-  //
+	public Cromossomo(ArrayList<Disciplina> disc) {
+		Random aleatorio = new Random();
+		this.cromossomoHash =  new Hashtable<Integer, ArrayList<Gene>>();
+		ArrayList<Gene> genes = new ArrayList<>();
+		for (int i = 0; i <disc.size(); i++) {
+			
+			
+			//cromossomoHash.put(arg0, arg1)
+			
+		}
+	}
+
+	
+	//
+	// Accessor methods
+	//
+/**
+ * 
+ * @return
+ */
+	public Hashtable<Integer, ArrayList<Gene>> getCromossomoHash() {
+		return cromossomoHash;
+	}
+	
+	
+	
+	/**
+	 * 
+	 * @param gene
+	 * @param codigoTimeSlot
+	 * <h2>Descrição</h2>
+	 * <p>Metodo que insere um gene no cromossomo em um timeSlot passado por paramentro)</p>
+	 */
+
+	public void insereGene(Gene gene, Integer codigoTimeSlot){
+		ArrayList<Gene> geneArray = new ArrayList<>();
+		
+		if (cromossomoHash.get(codigoTimeSlot)==null) {
+			geneArray.add(gene);
+			this.cromossomoHash.put(codigoTimeSlot, geneArray);
+		}else{
+			geneArray=cromossomoHash.get(codigoTimeSlot);
+			geneArray.add(gene);
+			cromossomoHash.put(codigoTimeSlot, geneArray);
+		}	
+		
+	}
+	
+
+
 
 }
-
-  //
-  // Other methods
-  //
-
-

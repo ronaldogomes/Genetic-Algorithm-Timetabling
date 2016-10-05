@@ -1,7 +1,13 @@
 package entr_saida;
 
+import java.awt.List;
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Random;
 import java.util.Scanner;
 
 import emc.Curso;
@@ -12,6 +18,7 @@ import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
+import genetic.Gene;
 
 
 
@@ -21,7 +28,7 @@ public class Teste {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String nome = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		String pathinfo = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
 		ArrayList<Curso> cursosEMC = new ArrayList<>();
 		ArrayList<Disciplina> DisciplinasEMC = new ArrayList<>();
@@ -32,7 +39,7 @@ public class Teste {
 		ArrayList<TipoSala> tipoSalaEMC = new ArrayList<>();
 
 		Arquivo arquivo = new Arquivo();
-		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(nome);
+		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(pathinfo);
 
 		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
 				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
@@ -46,6 +53,11 @@ public class Teste {
 //		imprimeArraySalas(salasEMC);
 //		imprimeArrayTimesSlots(tipoSalaEMC);
 //		imprimeArrayTipoSala(tipoSalaEMC);
+		
+		
+	
+
+		
 
 	}
 

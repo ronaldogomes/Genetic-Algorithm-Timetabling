@@ -215,7 +215,8 @@ public class Arquivo {
 							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasMinistrar.add(Disciplina.qualDisciplina(DisciplinasEMC, Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+								disciplinasMinistrar.add(Disciplina.qualDisciplina(DisciplinasEMC,
+										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}
