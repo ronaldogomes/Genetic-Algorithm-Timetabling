@@ -1,14 +1,8 @@
 package entr_saida;
 
-import java.awt.List;
-import java.io.ObjectInputStream.GetField;
+
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.Scanner;
+
 
 import emc.Curso;
 import emc.Disciplina;
@@ -17,8 +11,7 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
-import genetic.Cromossomo;
-import genetic.Gene;
+
 
 
 
@@ -46,13 +39,13 @@ public class Teste {
 				tipoSalaEMC);
 		
 //		IMPRIME OS ARRAYS DOS OBJETOS CARREGADOS DO ARQUIVO ag-informacoes.csv		
-//		imprimeArrayAlunos(alunosEMC);
-//		imprimeArrayCursos(cursosEMC);
-//		imprimeArrayDisciplinas(DisciplinasEMC);
+		imprimeArrayAlunos(alunosEMC);
+		imprimeArrayCursos(cursosEMC);
+		imprimeArrayDisciplinas(DisciplinasEMC);
 		imprimeArrayProfessores(professoresEMC);
-//		imprimeArraySalas(salasEMC);
-//		imprimeArrayTimesSlots(tipoSalaEMC);
-//		imprimeArrayTipoSala(tipoSalaEMC);
+		imprimeArraySalas(salasEMC);
+		imprimeArrayTimesSlots(tipoSalaEMC);
+		imprimeArrayTipoSala(tipoSalaEMC);
 		
 		
 	
