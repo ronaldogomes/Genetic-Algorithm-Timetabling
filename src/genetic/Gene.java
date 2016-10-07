@@ -15,6 +15,7 @@ public class Gene {
 	private Disciplina disciplina;
 	private ArrayList<Estudante> alunos;
 	private TimeSlots timeslots;
+
 	//
 	//CONSTRUTORES
 	//
@@ -73,5 +74,8 @@ public class Gene {
 	public void setTimeslots(TimeSlots timeslots) {
 		this.timeslots = timeslots;
 	}
+
+
+
 
 }
