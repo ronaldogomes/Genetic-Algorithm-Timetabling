@@ -30,18 +30,6 @@ public class Cromossomo {
 		this.cromossomoHash =  new Hashtable<Integer, ArrayList<Gene>>();
 	}
 
-	public Cromossomo(ArrayList<Disciplina> disc) {
-		Random aleatorio = new Random();
-		this.cromossomoHash =  new Hashtable<Integer, ArrayList<Gene>>();
-		ArrayList<Gene> genes = new ArrayList<>();
-		for (int i = 0; i <disc.size(); i++) {
-			
-			
-			//cromossomoHash.put(arg0, arg1)
-			
-		}
-	}
-
 	
 	//
 	// Accessor methods
