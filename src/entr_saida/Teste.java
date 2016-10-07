@@ -55,7 +55,13 @@ public class Teste {
 			if(cromo1.getCromossomoHash().get(i)!=null){
 				contador +=cromo1.getCromossomoHash().get(i).size();
 				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
-					System.out.print(cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao()+"   ");
+					System.out.print("["+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao()+"   ");
+					System.out.print(" > "+cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome()+"] {");
+					for (int j2 = 0; j2 < cromo1.getCromossomoHash().get(i).get(j).getAlunos().size(); j2++) {
+						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome()+", ");
+					}
+					System.out.print("}");
+					
 				}
 				}
 			
