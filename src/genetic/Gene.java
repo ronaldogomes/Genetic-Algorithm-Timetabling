@@ -2,6 +2,7 @@ package genetic;
 
 import java.util.ArrayList;
 
+import emc.Curso;
 import emc.Disciplina;
 import emc.Estudante;
 import emc.Professor;
@@ -13,11 +14,24 @@ public class Gene {
 	private Sala sala;
 	private Disciplina disciplina;
 	private ArrayList<Estudante> alunos;
+	private TimeSlots timeslots;
 	//
 	//CONSTRUTORES
 	//
-	public Gene(Disciplina disc){
-		setDisciplina(disc);
+	public Gene(Professor professor, Sala sala, Disciplina disciplina, ArrayList<Estudante> alunos, TimeSlots timeslots,
+			Curso curso) {
+		this.setProfessor(professor);
+		this.setSala(sala);
+		this.setDisciplina(disciplina);
+		this.setAlunos(alunos);
+		this.setTimeslots(timeslots);
+		this.setCurso(curso);
+	}
+
+
+	private void setCurso(Curso curso) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
@@ -48,6 +62,16 @@ public class Gene {
 	}
 	public void setAlunos(ArrayList<Estudante> alunos) {
 		this.alunos = alunos;
+	}
+
+
+	public TimeSlots getTimeslots() {
+		return timeslots;
+	}
+
+
+	public void setTimeslots(TimeSlots timeslots) {
+		this.timeslots = timeslots;
 	}
 
 }
