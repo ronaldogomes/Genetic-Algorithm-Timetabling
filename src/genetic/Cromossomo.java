@@ -44,15 +44,18 @@ public class Cromossomo {
 		int indexTSlot = aleatorio.nextInt(tipoSalaEMC.size());
 		int indexCurso= aleatorio.nextInt(cursosEMC.size());
 		// array de alunos aleatório
-		ArrayList<Estudante> alunos = new ArrayList<>();
-		for (int i = 0; i < salasEMC.get(indexSala).getCapacidade(); i++) {
-			int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
-			alunos.add(alunosEMC.get(indexAl));
-			
-		}
+		ArrayList<Estudante> alunos;
+		
 		
 		// carregando cromossomo 
 		for (int i = 0; i < disciplinasEMC.size(); i++) {
+			alunos= new ArrayList<>();
+			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
+				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
+				alunos.add(alunosEMC.get(indexAl));
+				
+			}
+			
 			insereGeneInCromossomo(
 					new Gene(professoresEMC.get(indexProf), salasEMC.get(indexSala),
 					disciplinasEMC.get(indexDisc), alunos,
