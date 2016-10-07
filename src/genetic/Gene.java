@@ -6,6 +6,7 @@ import emc.Disciplina;
 import emc.Estudante;
 import emc.Professor;
 import emc.Sala;
+import emc.TimeSlots;
 
 public class Gene {
 	private Professor professor;
@@ -15,7 +16,9 @@ public class Gene {
 	//
 	//CONSTRUTORES
 	//
-
+	public Gene(Disciplina disc){
+		setDisciplina(disc);
+	}
 
 
 	//

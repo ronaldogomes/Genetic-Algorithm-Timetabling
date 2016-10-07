@@ -11,7 +11,7 @@ public class Populacao {
 		
 		this.setSizePopulation(sizePopulation);
 		for (int i =0;i<sizePopulation;i++){
-			cromossomo[i] = new Cromossomo();	
+			//cromossomo[i] = new Cromossomo();	
 		}
 		
 	}

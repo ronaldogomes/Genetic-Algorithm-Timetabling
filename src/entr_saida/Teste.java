@@ -1,8 +1,8 @@
 package entr_saida;
 
-import java.io.ObjectInputStream.GetField;
+
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 import emc.Curso;
 import emc.Disciplina;
@@ -11,7 +11,7 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
-import genetic.Cromossomo;
+
 
 
 
@@ -21,7 +21,7 @@ public class Teste {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String nome = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		String pathinfo = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
 		ArrayList<Curso> cursosEMC = new ArrayList<>();
 		ArrayList<Disciplina> DisciplinasEMC = new ArrayList<>();
@@ -32,20 +32,25 @@ public class Teste {
 		ArrayList<TipoSala> tipoSalaEMC = new ArrayList<>();
 
 		Arquivo arquivo = new Arquivo();
-		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(nome);
+		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(pathinfo);
 
 		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
 				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
 				tipoSalaEMC);
 		
 //		IMPRIME OS ARRAYS DOS OBJETOS CARREGADOS DO ARQUIVO ag-informacoes.csv		
-//		imprimeArrayAlunos(alunosEMC);
-//		imprimeArrayCursos(cursosEMC);
-//		imprimeArrayDisciplinas(DisciplinasEMC);
+		imprimeArrayAlunos(alunosEMC);
+		imprimeArrayCursos(cursosEMC);
+		imprimeArrayDisciplinas(DisciplinasEMC);
 		imprimeArrayProfessores(professoresEMC);
-//		imprimeArraySalas(salasEMC);
-//		imprimeArrayTimesSlots(tipoSalaEMC);
-//		imprimeArrayTipoSala(tipoSalaEMC);
+		imprimeArraySalas(salasEMC);
+		imprimeArrayTimesSlots(tipoSalaEMC);
+		imprimeArrayTipoSala(tipoSalaEMC);
+		
+		
+	
+
+		
 
 	}
 
