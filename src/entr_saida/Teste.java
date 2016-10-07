@@ -11,6 +11,7 @@ import emc.Professor;
 import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
+import genetic.Cromossomo;
 
 
 
@@ -39,16 +40,27 @@ public class Teste {
 				tipoSalaEMC);
 		
 //		IMPRIME OS ARRAYS DOS OBJETOS CARREGADOS DO ARQUIVO ag-informacoes.csv		
-		imprimeArrayAlunos(alunosEMC);
-		imprimeArrayCursos(cursosEMC);
-		imprimeArrayDisciplinas(DisciplinasEMC);
-		imprimeArrayProfessores(professoresEMC);
-		imprimeArraySalas(salasEMC);
-		imprimeArrayTimesSlots(tipoSalaEMC);
-		imprimeArrayTipoSala(tipoSalaEMC);
-		
-		
-	
+//		imprimeArrayAlunos(alunosEMC);
+//		imprimeArrayCursos(cursosEMC);
+//		imprimeArrayDisciplinas(DisciplinasEMC);
+//		imprimeArrayProfessores(professoresEMC);
+//		imprimeArraySalas(salasEMC);
+//		imprimeArrayTimesSlots(tipoSalaEMC);
+//		imprimeArrayTipoSala(tipoSalaEMC);
+		int contador = 0;
+		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
+		for (int i = 1; i < 169; i++) {
+			System.out.print(i+" ");
+			
+			if(cromo1.getCromossomoHash().get(i)!=null){
+				contador +=cromo1.getCromossomoHash().get(i).size();
+				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
+					System.out.print(cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao()+"   ");
+				}
+				}
+			
+			System.out.println("");
+		}
 
 		
 
