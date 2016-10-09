@@ -12,6 +12,7 @@ import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
+import genetic.Populacao;
 
 
 
@@ -25,7 +26,7 @@ public class Teste {
 		String pathinfo = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
 		ArrayList<Curso> cursosEMC = new ArrayList<>();
-		ArrayList<Disciplina> DisciplinasEMC = new ArrayList<>();
+		ArrayList<Disciplina> disciplinasEMC = new ArrayList<>();
 		ArrayList<Estudante> alunosEMC = new ArrayList<>();
 		ArrayList<Professor> professoresEMC = new ArrayList<>();
 		ArrayList<Sala> salasEMC = new ArrayList<>();
@@ -35,7 +36,7 @@ public class Teste {
 		Arquivo arquivo = new Arquivo();
 		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(pathinfo);
 
-		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
+		arquivo.informacoesAg(linhaPorLinha, cursosEMC, disciplinasEMC,
 				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
 				tipoSalaEMC);
 		
@@ -47,8 +48,11 @@ public class Teste {
 //		imprimeArraySalas(salasEMC);
 //		imprimeArrayTimesSlots(tipoSalaEMC);
 //		imprimeArrayTipoSala(tipoSalaEMC);
+		Populacao populacaoInicial = new Populacao(10, cursosEMC, disciplinasEMC,
+				alunosEMC, professoresEMC,  salasEMC,
+				listaTimeSlots, tipoSalaEMC);
 		int contador = 0;
-		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
+		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, disciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
 		for (int i = 1; i < 169; i++) {
 			System.out.print(i+" ");
 			
