@@ -13,14 +13,15 @@ import emc.TipoSala;
 public class Populacao {
 
 	private int sizePopulation;
-	Cromossomo cromossomo[];
+	private Cromossomo populacao[];
 
-	Populacao(int sizePopulation, ArrayList<Curso> cursosEMC, ArrayList<Disciplina> DisciplinasEMC,
+	public Populacao(int sizePopulation, ArrayList<Curso> cursosEMC, ArrayList<Disciplina> DisciplinasEMC,
 				ArrayList<Estudante> alunosEMC, ArrayList<Professor> professoresEMC, ArrayList<Sala> salasEMC,
 				ArrayList<TimeSlots> listaTimeSlots, ArrayList<TipoSala> tipoSalaEMC) {
 		this.setSizePopulation(sizePopulation);
+		this.populacao= new Cromossomo[sizePopulation];
 		for (int i = 0; i < sizePopulation; i++) {
-			cromossomo[i] = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC,
+			populacao[i] = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC,
 					listaTimeSlots, tipoSalaEMC);
 		}
 
@@ -33,5 +34,6 @@ public class Populacao {
 	public void setSizePopulation(int sizePopulation) {
 		this.sizePopulation = sizePopulation;
 	}
+	
 
 }
