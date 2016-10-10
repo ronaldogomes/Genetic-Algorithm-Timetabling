@@ -15,7 +15,7 @@ public class Gene {
 	private Disciplina disciplina;
 	private ArrayList<Estudante> alunos;
 	private TimeSlots timeslots;
-
+	private Curso curso;
 	//
 	//CONSTRUTORES
 	//
@@ -30,11 +30,13 @@ public class Gene {
 	}
 
 
-	private void setCurso(Curso curso) {
-		// TODO Auto-generated method stub
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 		
 	}
-
+	public Curso getCurso(){
+		 return curso;
+	 }
 
 	//
 	//SETTERS AND GETTERS
@@ -74,6 +76,9 @@ public class Gene {
 	public void setTimeslots(TimeSlots timeslots) {
 		this.timeslots = timeslots;
 	}
+
+
+
 
 
 

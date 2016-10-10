@@ -83,7 +83,7 @@ public class Teste {
 	// 
 	//METODOS
 	//
-	
+		
 	public static void validaCromossomo(Cromossomo cromossomo){
 		boolean cromossomoValido = true;
 		if(cromossomoValido){
