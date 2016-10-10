@@ -30,7 +30,7 @@ public class Teste {
 	static ArrayList<TipoSala> tipoSalaEMC;// = new ArrayList<>();
 	
 	public static void main(String[] args) {
-		String pathinfo = "C:/Users/gigo_/Documents/GitHub/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		String pathinfo = "../Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
 		cursosEMC = new ArrayList<>();
 		DisciplinasEMC = new ArrayList<>();
