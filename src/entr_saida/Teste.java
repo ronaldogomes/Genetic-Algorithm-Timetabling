@@ -21,16 +21,16 @@ public class Teste {
 	/**
 	 * @param args
 	 */
-	static ArrayList<Curso> cursosEMC;// = new ArrayList<>();
-	static ArrayList<Disciplina> DisciplinasEMC ;//= new ArrayList<>();
-	static ArrayList<Estudante> alunosEMC ;//= new ArrayList<>();
-	static ArrayList<Professor> professoresEMC ;//= new ArrayList<>();
-	static ArrayList<Sala> salasEMC;// =; new ArrayList<>();
-	static ArrayList<TimeSlots> listaTimeSlots;// = new ArrayList<>();
-	static ArrayList<TipoSala> tipoSalaEMC;// = new ArrayList<>();
+	static ArrayList<Curso> cursosEMC;
+	static ArrayList<Disciplina> DisciplinasEMC ;
+	static ArrayList<Estudante> alunosEMC ;
+	static ArrayList<Professor> professoresEMC ;
+	static ArrayList<Sala> salasEMC;
+	static ArrayList<TimeSlots> listaTimeSlots;
+	static ArrayList<TipoSala> tipoSalaEMC;
 	
 	public static void main(String[] args) {
-		String pathinfo = "C:/Users/gigo_/Documents/GitHub/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		String pathinfo = "../Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
 		cursosEMC = new ArrayList<>();
 		DisciplinasEMC = new ArrayList<>();
