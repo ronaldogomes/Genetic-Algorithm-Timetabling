@@ -83,6 +83,22 @@ public class Teste {
 	// 
 	//METODOS
 	//
+	
+	public static void validaCromossomo(Cromossomo cromossomo){
+		boolean cromossomoValido = true;
+		if(cromossomoValido){
+			/**
+			 * Insere na populacao. Ver qual estrutura usar para populacao(hash, vector, list).
+			 * */
+		}
+		else{
+			/**
+			 * Descarta
+			 * */
+			
+		}
+	}
+	
 	public static void imprimeArrayCursos(ArrayList<Curso> cursos) {
 		for (int i = 0; i < cursos.size(); i++) {
 			System.out.println(cursos.get(i).getCodigo() + ", "
