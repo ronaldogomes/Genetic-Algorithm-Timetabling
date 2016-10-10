@@ -38,31 +38,52 @@ public class Cromossomo {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// index aleatório dos arrays
 		Random aleatorio = new Random();
-		int indexSala, indexTSlot;
+		int indexProf, indexSala, indexDisc, indexTSlot, indexCurso;
 		// array de alunos aleatório
 		ArrayList<Estudante> alunos;
 		
-		
+		int i =0;
 		// carregando cromossomo 
-		for (int i = 0; i < disciplinasEMC.size(); i++) {
+		do {
+			
+			indexProf = aleatorio.nextInt(professoresEMC.size());
 			indexSala = aleatorio.nextInt(salasEMC.size());
+//<<<<<<< HEAD
+//			
+//			indexTSlot = TimeSlots.timeSlotAleatorioValido();//= aleatorio.nextInt(listaTimeSlots.size());
+//			
+//			alunos= new ArrayList<>();
+//			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
+//				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
+//				alunos.add(alunosEMC.get(indexAl));
+//				
+//			}
+//=======
+			indexDisc = aleatorio.nextInt(disciplinasEMC.size());
+			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
+			indexCurso= aleatorio.nextInt(cursosEMC.size());
+//>>>>>>> ace4f876ee08195a85cf64a73e8fc8f8f5f14096
 			
-			indexTSlot = TimeSlots.timeSlotAleatorioValido();//= aleatorio.nextInt(listaTimeSlots.size());
 			
-			alunos= new ArrayList<>();
-			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
-				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
-				alunos.add(alunosEMC.get(indexAl));
+			
+			if(validaTS(indexTSlot)){
+			
+				alunos= new ArrayList<>();
+				for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
+					int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
+					alunos.add(alunosEMC.get(indexAl));
+					
+				}
 				
+				insereGeneInCromossomo(
+						new Gene(professoresEMC.get(indexProf), salasEMC.get(indexSala),
+						disciplinasEMC.get(indexDisc), alunos,
+						listaTimeSlots.get(indexTSlot), cursosEMC.get(indexCurso)), listaTimeSlots.get(indexTSlot).getCodigo());
+
+				i++;
 			}
 			
-			insereGeneInCromossomo(
-					new Gene(professoresEMC.get(aleatorio.nextInt(professoresEMC.size())), salasEMC.get(indexSala),
-					disciplinasEMC.get(aleatorio.nextInt(disciplinasEMC.size())), alunos,
-					listaTimeSlots.get(indexTSlot), cursosEMC.get(aleatorio.nextInt(cursosEMC.size()))), listaTimeSlots.get(indexTSlot).getCodigo());
-			
-			
-		}
+		}while(i<disciplinasEMC.size());
 
 	}
 
@@ -106,5 +127,22 @@ public class Cromossomo {
 		}
 
 	}
+	
+	public boolean validaTS(int indexTSlot){
+		boolean valida = false;
+		
+		for(int ds = 0;ds<5;ds++){
+				if(indexTSlot+1 >= 32+24*ds && indexTSlot+1  <= 36+24*ds)
+					valida = true;
+				else if(indexTSlot+1 >= 38+24*ds && indexTSlot+1 <= 42+24*ds)
+					valida = true;
+				else if(indexTSlot+1 >= 43+24*ds && indexTSlot+1 <= 46+24*ds)
+					valida = true;
+				if(indexTSlot+1 >= 32+24*5 && indexTSlot+1 <= 36+24*5)
+					valida = true;
+			}			
+		return valida;
+	}
+	
 
 }
