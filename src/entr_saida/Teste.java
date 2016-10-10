@@ -21,13 +21,13 @@ public class Teste {
 	/**
 	 * @param args
 	 */
-	static ArrayList<Curso> cursosEMC;
-	static ArrayList<Disciplina> DisciplinasEMC ;
-	static ArrayList<Estudante> alunosEMC ;
-	static ArrayList<Professor> professoresEMC ;
-	static ArrayList<Sala> salasEMC;
-	static ArrayList<TimeSlots> listaTimeSlots;
-	static ArrayList<TipoSala> tipoSalaEMC;
+	public static ArrayList<Curso> cursosEMC;
+	public static ArrayList<Disciplina> DisciplinasEMC ;
+	public static ArrayList<Estudante> alunosEMC ;
+	public static ArrayList<Professor> professoresEMC ;
+	public static ArrayList<Sala> salasEMC;
+	public static ArrayList<TimeSlots> listaTimeSlots;
+	public static ArrayList<TipoSala> tipoSalaEMC;
 	
 	public static void main(String[] args) {
 		String pathinfo = "../Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
@@ -75,6 +75,11 @@ public class Teste {
 			
 			System.out.println("");
 		}
+		//teste ar
+		ArrayList<String> arqRestric = arquivo.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
+		arquivo.restricoesAg(arqRestric);
+		
+	
 
 		
 
