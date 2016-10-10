@@ -116,6 +116,21 @@ public class Cromossomo {
 
 	}
 	
+	public boolean validaTS(int indexTSlot){
+		boolean valida = false;
+		
+		for(int ds = 0;ds<5;ds++){
+				if(indexTSlot+1 >= 32+24*ds && indexTSlot+1  <= 36+24*ds)
+					valida = true;
+				else if(indexTSlot+1 >= 38+24*ds && indexTSlot+1 <= 42+24*ds)
+					valida = true;
+				else if(indexTSlot+1 >= 43+24*ds && indexTSlot+1 <= 46+24*ds)
+					valida = true;
+				if(indexTSlot+1 >= 32+24*5 && indexTSlot+1 <= 36+24*5)
+					valida = true;
+			}			
+		return valida;
+	}
 	
 
 }
