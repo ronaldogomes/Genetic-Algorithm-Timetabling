@@ -3,6 +3,8 @@ package emc;
 import java.util.ArrayList;
 import java.util.Date;
 
+import entr_saida.Teste;
+
 
 
 /**
@@ -47,10 +49,10 @@ public class TimeSlots {
  	 * <p>Retorna qual timeSlots tem aquele codigo (codigoTimesSlots) de uma array list de timeSlots</p>
 	 * <p>caso o codigo não pertença a nenhum timeSlost do array passado por parametro então retorna null</p>
  */
-  public static TimeSlots qualTimeSlot(ArrayList<TimeSlots> timeSlots, int codigoTimeSlot){
-		for (int i = 0; i < timeSlots.size(); i++) {
-			if(timeSlots.get(i).codigo==codigoTimeSlot){
-				return timeSlots.get(i);
+  public static TimeSlots qualTimeSlot(int codigoTimeSlot){
+		for (int i = 0; i < Teste.listaTimeSlots.size(); i++) {
+			if(Teste.listaTimeSlots.get(i).codigo == codigoTimeSlot){
+				return Teste.listaTimeSlots.get(i);
 			}
 		}
 		return null;
