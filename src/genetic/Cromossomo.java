@@ -38,17 +38,15 @@ public class Cromossomo {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// index aleatório dos arrays
 		Random aleatorio = new Random();
-		int indexProf = aleatorio.nextInt(professoresEMC.size());
-		int indexSala = aleatorio.nextInt(salasEMC.size());
-		int indexDisc = aleatorio.nextInt(disciplinasEMC.size());
-		int indexTSlot = aleatorio.nextInt(tipoSalaEMC.size());
-		int indexCurso= aleatorio.nextInt(cursosEMC.size());
+		int indexSala, indexTSlot;
 		// array de alunos aleatório
 		ArrayList<Estudante> alunos;
 		
 		
 		// carregando cromossomo 
 		for (int i = 0; i < disciplinasEMC.size(); i++) {
+			indexSala = aleatorio.nextInt(salasEMC.size());
+			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
 			alunos= new ArrayList<>();
 			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
 				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
@@ -57,15 +55,11 @@ public class Cromossomo {
 			}
 			
 			insereGeneInCromossomo(
-					new Gene(professoresEMC.get(indexProf), salasEMC.get(indexSala),
-					disciplinasEMC.get(indexDisc), alunos,
-					listaTimeSlots.get(indexTSlot), cursosEMC.get(indexCurso)), listaTimeSlots.get(indexTSlot).getCodigo());
+					new Gene(professoresEMC.get(aleatorio.nextInt(professoresEMC.size())), salasEMC.get(indexSala),
+					disciplinasEMC.get(aleatorio.nextInt(disciplinasEMC.size())), alunos,
+					listaTimeSlots.get(indexTSlot), cursosEMC.get(aleatorio.nextInt(cursosEMC.size()))), listaTimeSlots.get(indexTSlot).getCodigo());
 			
-			indexProf = aleatorio.nextInt(professoresEMC.size());
-			indexSala = aleatorio.nextInt(salasEMC.size());
-			indexDisc = aleatorio.nextInt(disciplinasEMC.size());
-			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
-			indexCurso= aleatorio.nextInt(cursosEMC.size());
+			
 		}
 
 	}
