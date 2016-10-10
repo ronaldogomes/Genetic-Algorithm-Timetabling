@@ -46,7 +46,9 @@ public class Cromossomo {
 		// carregando cromossomo 
 		for (int i = 0; i < disciplinasEMC.size(); i++) {
 			indexSala = aleatorio.nextInt(salasEMC.size());
-			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
+			
+			indexTSlot = TimeSlots.timeSlotAleatorioValido();//= aleatorio.nextInt(listaTimeSlots.size());
+			
 			alunos= new ArrayList<>();
 			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
 				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);

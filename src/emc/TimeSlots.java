@@ -2,6 +2,7 @@ package emc;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import entr_saida.Teste;
 
@@ -56,6 +57,15 @@ public class TimeSlots {
 			}
 		}
 		return null;
+  }
+  public static int timeSlotAleatorioValido(){
+	  Random aleatorio = new Random();
+	  int indexTSlot, a;
+	  do{
+	  indexTSlot = aleatorio.nextInt(Teste.listaTimeSlots.size());
+	  a=9+(int)(indexTSlot/24)*24;
+	  }while(indexTSlot>=a && indexTSlot<=a+14);
+	  return indexTSlot;
   }
 
 
