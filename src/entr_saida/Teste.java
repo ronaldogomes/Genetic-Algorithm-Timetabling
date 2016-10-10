@@ -12,7 +12,6 @@ import emc.Sala;
 import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
-import genetic.Populacao;
 
 
 
@@ -22,21 +21,29 @@ public class Teste {
 	/**
 	 * @param args
 	 */
+	static ArrayList<Curso> cursosEMC;// = new ArrayList<>();
+	static ArrayList<Disciplina> DisciplinasEMC ;//= new ArrayList<>();
+	static ArrayList<Estudante> alunosEMC ;//= new ArrayList<>();
+	static ArrayList<Professor> professoresEMC ;//= new ArrayList<>();
+	static ArrayList<Sala> salasEMC;// =; new ArrayList<>();
+	static ArrayList<TimeSlots> listaTimeSlots;// = new ArrayList<>();
+	static ArrayList<TipoSala> tipoSalaEMC;// = new ArrayList<>();
+	
 	public static void main(String[] args) {
-		String pathinfo = "/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		String pathinfo = "C:/Users/gigo_/Documents/GitHub/Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
 
-		ArrayList<Curso> cursosEMC = new ArrayList<>();
-		ArrayList<Disciplina> disciplinasEMC = new ArrayList<>();
-		ArrayList<Estudante> alunosEMC = new ArrayList<>();
-		ArrayList<Professor> professoresEMC = new ArrayList<>();
-		ArrayList<Sala> salasEMC = new ArrayList<>();
-		ArrayList<TimeSlots> listaTimeSlots = new ArrayList<>();
-		ArrayList<TipoSala> tipoSalaEMC = new ArrayList<>();
+		cursosEMC = new ArrayList<>();
+		DisciplinasEMC = new ArrayList<>();
+		alunosEMC = new ArrayList<>();
+		professoresEMC = new ArrayList<>();
+		salasEMC = new ArrayList<>();
+		listaTimeSlots = new ArrayList<>();
+		tipoSalaEMC = new ArrayList<>();
 
 		Arquivo arquivo = new Arquivo();
 		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(pathinfo);
 
-		arquivo.informacoesAg(linhaPorLinha, cursosEMC, disciplinasEMC,
+		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
 				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
 				tipoSalaEMC);
 		
@@ -48,11 +55,8 @@ public class Teste {
 //		imprimeArraySalas(salasEMC);
 //		imprimeArrayTimesSlots(tipoSalaEMC);
 //		imprimeArrayTipoSala(tipoSalaEMC);
-		Populacao populacaoInicial = new Populacao(10, cursosEMC, disciplinasEMC,
-				alunosEMC, professoresEMC,  salasEMC,
-				listaTimeSlots, tipoSalaEMC);
 		int contador = 0;
-		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, disciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
+		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
 		for (int i = 1; i < 169; i++) {
 			System.out.print(i+" ");
 			
