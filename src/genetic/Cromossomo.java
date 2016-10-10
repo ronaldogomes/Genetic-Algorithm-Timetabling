@@ -48,21 +48,10 @@ public class Cromossomo {
 			
 			indexProf = aleatorio.nextInt(professoresEMC.size());
 			indexSala = aleatorio.nextInt(salasEMC.size());
-//<<<<<<< HEAD
-//			
-//			indexTSlot = TimeSlots.timeSlotAleatorioValido();//= aleatorio.nextInt(listaTimeSlots.size());
-//			
-//			alunos= new ArrayList<>();
-//			for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
-//				int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
-//				alunos.add(alunosEMC.get(indexAl));
-//				
-//			}
-//=======
 			indexDisc = aleatorio.nextInt(disciplinasEMC.size());
 			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
 			indexCurso= aleatorio.nextInt(cursosEMC.size());
-//>>>>>>> ace4f876ee08195a85cf64a73e8fc8f8f5f14096
+
 			
 			
 			
