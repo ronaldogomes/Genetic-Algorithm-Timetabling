@@ -96,13 +96,8 @@ public class Arquivo {
 							Integer codDiaSemana = Integer.parseInt(infgormEntrArq.get(i).split(",")[1]);
 							String horaIncioFim = infgormEntrArq.get(i).split(",")[2] + ","
 									+ infgormEntrArq.get(i).split(",")[2];
-							listaTimeSlots.add(new TimeSlots(codigo, codDiaSemana, horaIncioFim));// ARRAY
-																									// DE
-																									// OBJETOS
-																									// TIMESLOT
-																									// CRIADO
+							listaTimeSlots.add(new TimeSlots(codigo, codDiaSemana, horaIncioFim));
 						}
-						//
 						i++;
 					} while (!infgormEntrArq.get(i).matches("CURSO"));
 				case "CURSO":
@@ -113,11 +108,8 @@ public class Arquivo {
 							String nome = infgormEntrArq.get(i).split(",")[1];
 							int numPeriodo = Integer.parseInt(infgormEntrArq.get(i).split(",")[2].trim());
 							int turno = Integer.parseInt(infgormEntrArq.get(i).split(",")[3].trim());
-
 							cursosEMC.add(new Curso(codigo, nome, numPeriodo, turno));
-							//
 						}
-						//
 						i++;
 					} while (!infgormEntrArq.get(i).matches("TIPO DE SALA"));
 				case "TIPO DE SALA":
@@ -126,7 +118,6 @@ public class Arquivo {
 							tipoSalaEMC.add(new TipoSala(Integer.parseInt(infgormEntrArq.get(i).split(",")[0]),
 									infgormEntrArq.get(i).split(",")[1]));
 						}
-						//
 						i++;
 					} while (!infgormEntrArq.get(i).matches("SALA"));
 				case "SALA":
@@ -139,9 +130,7 @@ public class Arquivo {
 									.get(Integer.parseInt(infgormEntrArq.get(i).split(",")[2].trim()) - 1);
 							int capacidade = Integer.parseInt(infgormEntrArq.get(i).split(",")[3].trim());
 							salasEMC.add(new Sala(codigo, descricao, tipoSala, capacidade));
-
 						}
-						//
 						i++;
 					} while (!infgormEntrArq.get(i).matches("DISCIPLINA"));
 				case "DISCIPLINA":
@@ -157,7 +146,6 @@ public class Arquivo {
 							int tipoSalaTeoria = Integer.parseInt(infgormEntrArq.get(i).split(",")[5].trim());
 							int cargaHorariaPratica = Integer.parseInt(infgormEntrArq.get(i).split(",")[6].trim());
 							int tipoSalaPratica = Integer.parseInt(infgormEntrArq.get(i).split(",")[7].trim());
-
 							DisciplinasEMC.add(new Disciplina(codigo, codigoCurso, codigoPeriodo, descricao,
 									cargaHorariaTeorica, tipoSalaTeoria, cargaHorariaPratica, tipoSalaPratica));
 						}
@@ -190,11 +178,9 @@ public class Arquivo {
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}
-						//
 						i++;
 					} while (i < infgormEntrArq.size());
 				}
-
 			}
 		}
 	}
