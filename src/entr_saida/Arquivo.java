@@ -19,6 +19,15 @@ import java.util.Scanner;
 import javax.swing.plaf.SliderUI;
 
 public class Arquivo {
+	static Arquivo arquivo = new Arquivo();
+	public static ArrayList<Curso> cursosEMC;
+	public static ArrayList<Disciplina> disciplinasEMC ;
+	public static ArrayList<Estudante> alunosEMC ;
+	public static ArrayList<Professor> professoresEMC ;
+	public static ArrayList<Sala> salasEMC;
+	public static ArrayList<TimeSlots> listaTimeSlots;
+	public static ArrayList<TipoSala> tipoSalaEMC;
+	
 	/**
 	 * 
 	 * @param nome
@@ -82,9 +91,17 @@ public class Arquivo {
 	 *            arraylists as ser passado por parametro
 	 *            <p/>
 	 */
-	public void informacoesAg(ArrayList<String> infgormEntrArq, ArrayList<Curso> cursosEMC,
-			ArrayList<Disciplina> DisciplinasEMC, ArrayList<Estudante> alunosEMC, ArrayList<Professor> professoresEMC,
-			ArrayList<Sala> salasEMC, ArrayList<TimeSlots> listaTimeSlots, ArrayList<TipoSala> tipoSalaEMC) {
+	public static void informacoesAg() {
+		String pathinfo = "../Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
+		cursosEMC = new ArrayList<>();
+		disciplinasEMC = new ArrayList<>();
+		alunosEMC = new ArrayList<>();
+		professoresEMC = new ArrayList<>();
+		salasEMC = new ArrayList<>();
+		listaTimeSlots = new ArrayList<>();
+		tipoSalaEMC = new ArrayList<>();
+
+		ArrayList<String> infgormEntrArq = arquivo.lerArquivo(pathinfo);
 		for (int i = 0; i < infgormEntrArq.size(); i++) {
 			if (!(infgormEntrArq.get(i).matches("//\\w{0,}|//d{0,}"))) {
 				switch (infgormEntrArq.get(i)) {
@@ -146,7 +163,7 @@ public class Arquivo {
 							int tipoSalaTeoria = Integer.parseInt(infgormEntrArq.get(i).split(",")[5].trim());
 							int cargaHorariaPratica = Integer.parseInt(infgormEntrArq.get(i).split(",")[6].trim());
 							int tipoSalaPratica = Integer.parseInt(infgormEntrArq.get(i).split(",")[7].trim());
-							DisciplinasEMC.add(new Disciplina(codigo, codigoCurso, codigoPeriodo, descricao,
+							disciplinasEMC.add(new Disciplina(codigo, codigoCurso, codigoPeriodo, descricao,
 									cargaHorariaTeorica, tipoSalaTeoria, cargaHorariaPratica, tipoSalaPratica));
 						}
 						i++;
@@ -157,7 +174,7 @@ public class Arquivo {
 								"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
 							ArrayList<Disciplina> disciplinasCursar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasCursar.add(Disciplina.qualDisciplina(DisciplinasEMC,
+								disciplinasCursar.add(Disciplina.qualDisciplina(
 										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							alunosEMC.add(new Estudante(Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim()),
@@ -173,7 +190,7 @@ public class Arquivo {
 							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasMinistrar.add(Disciplina.qualDisciplina(DisciplinasEMC,
+								disciplinasMinistrar.add(Disciplina.qualDisciplina(
 										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
@@ -185,7 +202,8 @@ public class Arquivo {
 		}
 	}
 
-	public void restricoesAg(ArrayList<String> restricoesEntrArq) {
+	public static void restricoesAg() {
+		ArrayList<String> restricoesEntrArq = arquivo.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
 		for (int i = 0; i < restricoesEntrArq.size(); i++) {
 			if (!(restricoesEntrArq.get(i).matches("//.{0,}"))) {
 
@@ -194,7 +212,12 @@ public class Arquivo {
 					do {
 						if (restricoesEntrArq.get(i)
 								.matches("\\s{0,}\\d{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-
+							Disciplina discTemp = Disciplina.qualDisciplina(Integer.parseInt(restricoesEntrArq.get(i).split(",")[0].trim()));
+							ArrayList<Integer> discSlotObr = new ArrayList<>();
+							for (int j = 1; j < restricoesEntrArq.get(i).split(",").length; j++) {
+									discSlotObr.add(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim()));								
+							}
+							discTemp.setSlotObr(discSlotObr);
 						}
 						i++;
 					} while (!restricoesEntrArq.get(i).matches("PROFESSOR"));
@@ -211,7 +234,7 @@ public class Arquivo {
 										.qualTimeSlot(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim())));
 							}
 							profTemp.setHorariosDisponiveis(listaTimeSlotTemp);
-							Teste.professoresEMC.set(Teste.professoresEMC.indexOf(profTemp), profTemp);
+							Arquivo.professoresEMC.set(Arquivo.professoresEMC.indexOf(profTemp), profTemp);
 						}
 						i++;
 					} while (i < restricoesEntrArq.size());
