@@ -28,13 +28,9 @@ public class Cromossomo {
 	//
 	// Constructor
 	//
-	public Cromossomo() {
-		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
-	}
 
-	public Cromossomo(ArrayList<Curso> cursosEMC, ArrayList<Disciplina> disciplinasEMC, ArrayList<Estudante> alunosEMC,
-			ArrayList<Professor> professoresEMC, ArrayList<Sala> salasEMC, ArrayList<TimeSlots> listaTimeSlots,
-			ArrayList<TipoSala> tipoSalaEMC) {
+
+	public Cromossomo() {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// index aleatório dos arrays
 		Random aleatorio = new Random();
@@ -46,11 +42,11 @@ public class Cromossomo {
 		// carregando cromossomo 
 		do {
 			
-			indexProf = aleatorio.nextInt(professoresEMC.size());
-			indexSala = aleatorio.nextInt(salasEMC.size());
-			indexDisc = aleatorio.nextInt(disciplinasEMC.size());
-			indexTSlot = aleatorio.nextInt(listaTimeSlots.size());
-			indexCurso= aleatorio.nextInt(cursosEMC.size());
+			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());
+			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
+			indexDisc = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
+			indexTSlot = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
+			indexCurso= aleatorio.nextInt(Arquivo.cursosEMC.size());
 
 			
 			
@@ -58,21 +54,21 @@ public class Cromossomo {
 			if(validaTS(indexTSlot)){
 			
 				alunos= new ArrayList<>();
-				for (int a = 0; a < salasEMC.get(indexSala).getCapacidade(); a++) {
-					int indexAl = aleatorio.nextInt(alunosEMC.size()-1);
-					alunos.add(alunosEMC.get(indexAl));
+				for (int a = 0; a < Arquivo.salasEMC.get(indexSala).getCapacidade(); a++) {
+					int indexAl = aleatorio.nextInt(Arquivo.alunosEMC.size()-1);
+					alunos.add(Arquivo.alunosEMC.get(indexAl));
 					
 				}
 				
 				insereGeneInCromossomo(
-						new Gene(professoresEMC.get(indexProf), salasEMC.get(indexSala),
-						disciplinasEMC.get(indexDisc), alunos,
-						listaTimeSlots.get(indexTSlot), cursosEMC.get(indexCurso)), listaTimeSlots.get(indexTSlot).getCodigo());
+						new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
+								Arquivo.disciplinasEMC.get(indexDisc), alunos,
+								Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
 
 				i++;
 			}
 			
-		}while(i<disciplinasEMC.size());
+		}while(i<Arquivo.disciplinasEMC.size());
 
 	}
 
