@@ -2,6 +2,8 @@ package emc;
 
 import java.util.ArrayList;
 
+import entr_saida.Arquivo;
+
 public class TipoSala {
 	private int codigo;
 	private String descricao;
@@ -23,10 +25,10 @@ public class TipoSala {
 	 * <p>caso o codigo não pertença a nenhum tipoSala do array passado por parametro então retorna null</p>
 	 */
 	
-	public static TipoSala qualTipoSala(ArrayList<TipoSala> tipoSalas, int codigoTipoSala){
-		for (int i = 0; i < tipoSalas.size(); i++) {
-			if (tipoSalas.get(i).getCodigo()==codigoTipoSala) {
-				return tipoSalas.get(i);
+	public static TipoSala qualTipoSala(int codigoTipoSala){
+		for (int i = 0; i < Arquivo.tipoSalaEMC.size(); i++) {
+			if (Arquivo.tipoSalaEMC.get(i).getCodigo()==codigoTipoSala) {
+				return Arquivo.tipoSalaEMC.get(i);
 			}
 		}
 		return null;
