@@ -2,17 +2,9 @@ package genetic;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Random;
 
-import emc.Curso;
-import emc.Disciplina;
-import emc.Estudante;
-import emc.Professor;
-import emc.Sala;
-import emc.TimeSlots;
-import emc.TipoSala;
+import emc.*;
 import entr_saida.Arquivo;
 
 /**
@@ -24,42 +16,38 @@ public class Cromossomo {
 	// Fields
 	//
 	private Hashtable<Integer, ArrayList<Gene>> cromossomoHash;
-
+	private Random aleatorio = new Random();
+	// index aleatório dos arrays
+	private int indexProf, indexSala, indexDisc, indexTSlot, indexCurso;
 	//
 	// Constructor
 	//
 
-
+	
 	public Cromossomo() {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
-		// index aleatório dos arrays
-		Random aleatorio = new Random();
-		int indexProf, indexSala, indexDisc, indexTSlot, indexCurso;
 		// array de alunos aleatório
 		ArrayList<Estudante> alunos;
-		
-		int i =0;
-		// carregando cromossomo 
+
+		int i = 0;
+
+		// carregando cromossomo
 		do {
-			
-			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());
-			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
-			indexDisc = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
+			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());			
 			indexTSlot = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
 			indexCurso= aleatorio.nextInt(Arquivo.cursosEMC.size());
+			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
+			indexDisc = geraIndexDisc(indexSala);
 
-			
-			
-			
-			if(validaTS(indexTSlot)){
-			
-				alunos= new ArrayList<>();
+			if (validaTS(indexTSlot)) {
+
+				alunos = new ArrayList<>();
 				for (int a = 0; a < Arquivo.salasEMC.get(indexSala).getCapacidade(); a++) {
-					int indexAl = aleatorio.nextInt(Arquivo.alunosEMC.size()-1);
+					int indexAl = aleatorio.nextInt(Arquivo.alunosEMC.size() - 1);
 					alunos.add(Arquivo.alunosEMC.get(indexAl));
-					
+
 				}
-				
+
 				insereGeneInCromossomo(
 						new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
 								Arquivo.disciplinasEMC.get(indexDisc), alunos,
@@ -73,7 +61,6 @@ public class Cromossomo {
 	}
 
 
-
 	//
 	// Accessor methods
 	//
@@ -84,7 +71,8 @@ public class Cromossomo {
 	public Hashtable<Integer, ArrayList<Gene>> getCromossomoHash() {
 		return cromossomoHash;
 	}
-	public void setCromossomo(Integer timeSlot, ArrayList<Gene> gene){
+
+	public void setCromossomo(Integer timeSlot, ArrayList<Gene> gene) {
 		this.cromossomoHash.put(timeSlot, gene);
 	}
 
@@ -112,22 +100,40 @@ public class Cromossomo {
 		}
 
 	}
-	
-	public boolean validaTS(int indexTSlot){
+
+	public boolean validaTS(int indexTSlot) {
 		boolean valida = false;
-		
-		for(int ds = 0;ds<5;ds++){
-				if(indexTSlot+1 >= 32+24*ds && indexTSlot+1  <= 36+24*ds)
-					valida = true;
-				else if(indexTSlot+1 >= 38+24*ds && indexTSlot+1 <= 42+24*ds)
-					valida = true;
-				else if(indexTSlot+1 >= 43+24*ds && indexTSlot+1 <= 46+24*ds)
-					valida = true;
-				if(indexTSlot+1 >= 32+24*5 && indexTSlot+1 <= 36+24*5)
-					valida = true;
-			}			
+
+		for (int ds = 0; ds < 5; ds++) {
+			if (indexTSlot + 1 >= 32 + 24 * ds && indexTSlot + 1 <= 36 + 24 * ds)
+				valida = true;
+			else if (indexTSlot + 1 >= 38 + 24 * ds && indexTSlot + 1 <= 42 + 24 * ds)
+				valida = true;
+			else if (indexTSlot + 1 >= 43 + 24 * ds && indexTSlot + 1 <= 46 + 24 * ds)
+				valida = true;
+			if (indexTSlot + 1 >= 32 + 24 * 5 && indexTSlot + 1 <= 36 + 24 * 5)
+				valida = true;
+		}
 		return valida;
 	}
 	
+	public int geraIndexDisc(int indexSala){
+		boolean valida = false;
+		int aux;
+		do {
+			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
+			
+			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+					.getCodigo())
+				valida = true;
+			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+					.getCodigo())
+				valida = true;
+			else
+				valida = false;
+		} while (valida);
+		return aux;
+	}
+ 
 
 }
