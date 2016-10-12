@@ -15,30 +15,30 @@ public class Mutacao {
 	 * Case 3 = muta sala	
 	 * Case 4 = muta timeSlot 
 	 * */	
-		int indexProf = random.nextInt(Teste.professoresEMC.size());
-		int indexSala = random.nextInt(Teste.salasEMC.size());
-		int indexDisc = random.nextInt(Teste.DisciplinasEMC.size());
-		int indexTSlot = random.nextInt(Teste.tipoSalaEMC.size());
+		int indexProf = random.nextInt(Arquivo.professoresEMC.size());
+		int indexSala = random.nextInt(Arquivo.salasEMC.size());
+		int indexDisc = random.nextInt(Arquivo.disciplinasEMC.size());
+		int indexTSlot = random.nextInt(Arquivo.tipoSalaEMC.size());
 		
 		switch(random.nextInt(5)){
 		 case 0:
-			 gene.setDisciplina(Teste.DisciplinasEMC.get(indexDisc));
+			 gene.setDisciplina(Arquivo.disciplinasEMC.get(indexDisc));
 			 break;
 		 case 1:
 			 ArrayList<Estudante> alunos = new ArrayList<>();
 			 for(int i=0;i<gene.getSala().getCapacidade();i++){
-				alunos.add(Teste.alunosEMC.get(random.nextInt(Teste.alunosEMC.size())));
+				alunos.add(Arquivo.alunosEMC.get(random.nextInt(Arquivo.alunosEMC.size())));
 			 }
 			 gene.setAlunos(alunos);
 			 break;
 		 case 2:
-			 gene.setProfessor(Teste.professoresEMC.get(indexProf));
+			 gene.setProfessor(Arquivo.professoresEMC.get(indexProf));
 			 break;
 		 case 3:
-			 gene.setSala(Teste.salasEMC.get(indexSala));
+			 gene.setSala(Arquivo.salasEMC.get(indexSala));
 			 break;
 		 case 4:
-			 gene.setTimeslots(Teste.listaTimeSlots.get(indexTSlot));
+			 gene.setTimeslots(Arquivo.listaTimeSlots.get(indexTSlot));
 			 break;
 
 		
