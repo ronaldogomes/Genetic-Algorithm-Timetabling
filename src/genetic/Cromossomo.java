@@ -23,7 +23,6 @@ public class Cromossomo {
 	// Constructor
 	//
 
-	
 	public Cromossomo() {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// array de alunos aleat√≥rio
@@ -33,9 +32,9 @@ public class Cromossomo {
 
 		// carregando cromossomo
 		do {
-			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());			
 			indexTSlot = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
-			indexCurso= aleatorio.nextInt(Arquivo.cursosEMC.size());
+			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());
+					indexCurso = aleatorio.nextInt(Arquivo.cursosEMC.size());
 			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
 			indexDisc = geraIndexDisc(indexSala);
 
@@ -48,18 +47,16 @@ public class Cromossomo {
 
 				}
 
-				insereGeneInCromossomo(
-						new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
-								Arquivo.disciplinasEMC.get(indexDisc), alunos,
-								Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
+				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
+						Arquivo.disciplinasEMC.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(indexTSlot),
+						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
 
 				i++;
 			}
-			
-		}while(i<Arquivo.disciplinasEMC.size());
+
+		} while (i < Arquivo.disciplinasEMC.size());
 
 	}
-
 
 	//
 	// Accessor methods
@@ -100,13 +97,17 @@ public class Cromossomo {
 		}
 
 	}
-    
+
 	/**
 	 * 
-	 * @param indexTSlot - cÛdigo do timeslot a ser consultado
-	 * @return boolean -  true se timeslot v·lido
-	 * <h2>DescriÁ„o</h2>
-	 * <p>MÈtodo que verifica se um timeslot È v·lido quanto ao hor·rio de funcionamento da instituiÁ„o</p>
+	 * @param indexTSlot
+	 *            - c√≥digo do timeslot a ser consultado
+	 * @return boolean - true se timeslot v√°lido
+	 *         <h2>Descri√ß√£o</h2>
+	 *         <p>
+	 * 		M√©todo que verifica se um timeslot √© v√°lido quanto ao hor√°rio de
+	 *         funcionamento da institui√ß√£o
+	 *         </p>
 	 */
 	public boolean validaTS(int indexTSlot) {
 		boolean valida = false;
@@ -123,30 +124,82 @@ public class Cromossomo {
 		}
 		return valida;
 	}
-	
+
 	/**
 	 * 
-	 * @param indexSala - index do arraylist de salas
-	 * @return int - cÛdigo de sala aleatÛrio que combina com tipo da disciplina 
-	 * <h2>DescriÁ„o</h2>
-	 * <p>MÈtodo que gera um index aleatÛrio para disciplina ser alocada em uma sala garantindo que o 
-	 * tipo da sala alocada È o mesmo tipo de sala em que a disciplina deve ser ministrada</p>
+	 * @param indexSala
+	 *            - index do arraylist de salas
+	 * @return int - c√≥digo de sala aleat√≥rio que combina com tipo da disciplina
+	 *         <h2>Descri√ß√£oo</h2>
+	 *         <p>
+	 * 		M√©todo que gera um index aleatÔøΩrio para disciplina ser alocada em
+	 *         uma sala garantindo que o tipo da sala alocada √© o mesmo tipo de
+	 *         sala em que a disciplina deve ser ministrada
+	 *         </p>
 	 */
-	public int geraIndexDisc(int indexSala){
+	public int geraIndexDisc(int indexSala) {
 		boolean valida = false;
 		int aux;
 		do {
 			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
-			
+
 			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 					.getCodigo())
 				valida = true;
-			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
-					.getCodigo())
+			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
+					.getTipoSala().getCodigo())
 				valida = true;
 			else
 				valida = false;
 		} while (valida);
 		return aux;
+	}
+
+	/**
+	 * 
+	 * @return
+	 *         <h1>Descri√ß√£o</h1>
+	 *         <p>
+	 *         m√©todo que gera index para um aluno do array de Estudantes
+	 *         garantindo a hard constraint [um aluno n√£o pode se matricular em
+	 *         duas disciplinas no mesmo timeSlot]
+	 *         </p>
+	 */
+	public int geraIndexAluno() {
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 *         <h1>Descri√ß√£o</h1>
+	 *         <p>
+	 *         m√©todo que gera index para um professor do array de professor
+	 *         garantindo a hard constraint [um professor n√£o pode ministrar
+	 *         duas disciplinas no mesmo timeSlot e n√£o pode ministrar em
+	 *         horario indisponivel]
+	 *         </p>
+	 */
+	public int geraIndexProfessor(int indexTimeSlot) {
+		
+		return 0;
+	}
+
+	/**
+	 * 
+	 * @return
+	 *         <h1>Descri√ß√£o</h1>
+	 *         <p>
+	 *         m√©todo que gera index para um timeSlot do array de timeSlot
+	 *         garantindo a hard constraint [um timeSlot n√£o pode ter duas
+	 *         disciplinas simultaneas]
+	 *         </p>
+	 */
+	public int geraIndexTimeSlot() {
+		return 0;
+	}
+
+	public int geraIndexSala() {
+		return 0;
 	}
 }
