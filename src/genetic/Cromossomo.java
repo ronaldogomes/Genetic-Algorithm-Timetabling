@@ -100,7 +100,14 @@ public class Cromossomo {
 		}
 
 	}
-
+    
+	/**
+	 * 
+	 * @param indexTSlot - código do timeslot a ser consultado
+	 * @return boolean -  true se timeslot válido
+	 * <h2>Descrição</h2>
+	 * <p>Método que verifica se um timeslot é válido quanto ao horário de funcionamento da instituição</p>
+	 */
 	public boolean validaTS(int indexTSlot) {
 		boolean valida = false;
 
@@ -134,6 +141,4 @@ public class Cromossomo {
 		} while (valida);
 		return aux;
 	}
- 
-
 }
