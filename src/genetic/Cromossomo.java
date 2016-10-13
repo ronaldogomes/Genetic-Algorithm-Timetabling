@@ -83,7 +83,7 @@ public class Cromossomo {
 	 *            <h2>DescriÃ§Ã£o</h2>
 	 *            <p>
 	 *            Metodo que insere um gene no cromossomo em um timeSlot passado
-	 *            por paramentro)
+	 *            por parametro)
 	 *            </p>
 	 */
 
@@ -124,6 +124,14 @@ public class Cromossomo {
 		return valida;
 	}
 	
+	/**
+	 * 
+	 * @param indexSala - index do arraylist de salas
+	 * @return int - código de sala aleatório que combina com tipo da disciplina 
+	 * <h2>Descrição</h2>
+	 * <p>Método que gera um index aleatório para disciplina ser alocada em uma sala garantindo que o 
+	 * tipo da sala alocada é o mesmo tipo de sala em que a disciplina deve ser ministrada</p>
+	 */
 	public int geraIndexDisc(int indexSala){
 		boolean valida = false;
 		int aux;
