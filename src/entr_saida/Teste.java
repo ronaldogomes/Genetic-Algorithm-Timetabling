@@ -21,65 +21,31 @@ public class Teste {
 	/**
 	 * @param args
 	 */
-	public static ArrayList<Curso> cursosEMC;
-	public static ArrayList<Disciplina> DisciplinasEMC ;
-	public static ArrayList<Estudante> alunosEMC ;
-	public static ArrayList<Professor> professoresEMC ;
-	public static ArrayList<Sala> salasEMC;
-	public static ArrayList<TimeSlots> listaTimeSlots;
-	public static ArrayList<TipoSala> tipoSalaEMC;
 	
 	public static void main(String[] args) {
-		String pathinfo = "../Genetic-Algorithm-Timetabling/files/ag-informacoes.csv";
-
-		cursosEMC = new ArrayList<>();
-		DisciplinasEMC = new ArrayList<>();
-		alunosEMC = new ArrayList<>();
-		professoresEMC = new ArrayList<>();
-		salasEMC = new ArrayList<>();
-		listaTimeSlots = new ArrayList<>();
-		tipoSalaEMC = new ArrayList<>();
-
-		Arquivo arquivo = new Arquivo();
-		ArrayList<String> linhaPorLinha = arquivo.lerArquivo(pathinfo);
-
-		arquivo.informacoesAg(linhaPorLinha, cursosEMC, DisciplinasEMC,
-				alunosEMC, professoresEMC, salasEMC, listaTimeSlots,
-				tipoSalaEMC);
-		
-//		IMPRIME OS ARRAYS DOS OBJETOS CARREGADOS DO ARQUIVO ag-informacoes.csv		
-//		imprimeArrayAlunos(alunosEMC);
-//		imprimeArrayCursos(cursosEMC);
-//		imprimeArrayDisciplinas(DisciplinasEMC);
-//		imprimeArrayProfessores(professoresEMC);
-//		imprimeArraySalas(salasEMC);
-//		imprimeArrayTimesSlots(tipoSalaEMC);
-//		imprimeArrayTipoSala(tipoSalaEMC);
+		Arquivo.informacoesAg();
+		Arquivo.restricoesAg();
+	
 		int contador = 0;
-		Cromossomo 	cromo1 = new Cromossomo(cursosEMC, DisciplinasEMC, alunosEMC, professoresEMC, salasEMC, listaTimeSlots, tipoSalaEMC);
+		Cromossomo cromo1 = new Cromossomo();
 		for (int i = 1; i < 169; i++) {
-			System.out.print(i+" ");
-			
-			if(cromo1.getCromossomoHash().get(i)!=null){
-				contador +=cromo1.getCromossomoHash().get(i).size();
+			System.out.print(i + " ");
+			if (cromo1.getCromossomoHash().get(i) != null) {
+				contador += cromo1.getCromossomoHash().get(i).size();
 				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
-					System.out.print("["+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao()+"   ");
-					System.out.print(" > "+cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome()+"] {");
+					System.out.print(
+							"[" + cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + "   ");
+					System.out.print(" > " + cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome() + "] {");
 					for (int j2 = 0; j2 < cromo1.getCromossomoHash().get(i).get(j).getAlunos().size(); j2++) {
-						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome()+", ");
+						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
 					}
 					System.out.print("}");
-					
+
 				}
-				}
-			
+			}
+
 			System.out.println("");
 		}
-		//teste ar
-		ArrayList<String> arqRestric = arquivo.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
-		arquivo.restricoesAg(arqRestric);
-		
-	
 
 		
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import entr_saida.Arquivo;
 import entr_saida.Teste;
 
 
@@ -21,7 +22,7 @@ public class TimeSlots {
    * Um numero natural maior que zero que indentifica de forma unica timeslot. 7) das 7h as 7h59min, 8) das 8h as 8h59min
    */
   private int codigo;
-  private Date data;
+  private String data;
   /**
    * 1-domingo, 2-segunda, 3-terça, 4-quarta, 5-quinta e 6-sexta
    */
@@ -51,9 +52,9 @@ public class TimeSlots {
 	 * <p>caso o codigo não pertença a nenhum timeSlost do array passado por parametro então retorna null</p>
  */
   public static TimeSlots qualTimeSlot(int codigoTimeSlot){
-		for (int i = 0; i < Teste.listaTimeSlots.size(); i++) {
-			if(Teste.listaTimeSlots.get(i).codigo == codigoTimeSlot){
-				return Teste.listaTimeSlots.get(i);
+		for (int i = 0; i < Arquivo.listaTimeSlots.size(); i++) {
+			if(Arquivo.listaTimeSlots.get(i).codigo == codigoTimeSlot){
+				return Arquivo.listaTimeSlots.get(i);
 			}
 		}
 		return null;
@@ -102,6 +103,12 @@ public class TimeSlots {
   public int getCodDiaSemana () {
     return codDiaSemana;
   }
+public String getData() {
+	return data;
+}
+public void setData(String data) {
+	this.data = data;
+}
 
   //
   // Other methods
