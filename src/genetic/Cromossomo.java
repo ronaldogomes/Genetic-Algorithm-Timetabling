@@ -105,7 +105,7 @@ public class Cromossomo {
 	 * @return boolean - true se timeslot válido
 	 *         <h2>Descrição</h2>
 	 *         <p>
-	 * 		Método que verifica se um timeslot é válido quanto ao horário de
+	 *         Método que verifica se um timeslot é válido quanto ao horário de
 	 *         funcionamento da instituição
 	 *         </p>
 	 */
@@ -132,7 +132,7 @@ public class Cromossomo {
 	 * @return int - código de sala aleatório que combina com tipo da disciplina
 	 *         <h2>Descriçãoo</h2>
 	 *         <p>
-	 * 		Método que gera um index aleat�rio para disciplina ser alocada em
+	 *         Método que gera um index aleat�rio para disciplina ser alocada em
 	 *         uma sala garantindo que o tipo da sala alocada é o mesmo tipo de
 	 *         sala em que a disciplina deve ser ministrada
 	 *         </p>
@@ -165,9 +165,28 @@ public class Cromossomo {
 	 *         duas disciplinas no mesmo timeSlot]
 	 *         </p>
 	 */
-	public int geraIndexAluno() {
+	public int geraIndexAluno(int indexTimeSlot) {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
-		return aleatorio.nextInt(Arquivo.alunosEMC.size());
+		int indexAlunoGerado;
+		boolean val = false;
+		do {
+			indexAlunoGerado = aleatorio.nextInt(Arquivo.alunosEMC.size());
+			if (!cromossomoHash.get(indexTimeSlot).isEmpty()) {
+				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeSlot).size(); indexArGene++) {
+					for (int indexArrEst = 0; indexArrEst < cromossomoHash.get(indexTimeSlot).get(indexArGene)
+							.getAlunos().size(); indexArrEst++) {
+						;
+						if (cromossomoHash.get(indexTimeSlot).get(indexArGene).getAlunos().get(indexArrEst)
+								.getCodigo() == Arquivo.alunosEMC.get(indexAlunoGerado).getCodigo()) {
+							val=true;
+						}else{
+							val=false;
+						}
+					}
+				}
+			} 
+		} while (val);
+		return indexAlunoGerado;
 	}
 
 	/**
@@ -201,23 +220,31 @@ public class Cromossomo {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
 		return aleatorio.nextInt(Arquivo.listaTimeSlots.size());
 	}
-/**
- * 
- * @return
- * <h2>Descrição</h2>
- * <p>Método que gera um index aleatório para a sala respeitando as Hard Constraints físicas da sala</p>
- */
+
+	/**
+	 * 
+	 * @return
+	 *         <h2>Descrição</h2>
+	 *         <p>
+	 *         Método que gera um index aleatório para a sala respeitando as
+	 *         Hard Constraints físicas da sala
+	 *         </p>
+	 */
 	public int geraIndexSala() {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
 		return aleatorio.nextInt(Arquivo.salasEMC.size());
 	}
+
 	/**
 	 * 
 	 * @return
-	 * <h2>Descrição</h2>
-	 * <p>Método que gera um index para o curso respeitando a hard constraints de curso</p>
+	 *         <h2>Descrição</h2>
+	 *         <p>
+	 *         Método que gera um index para o curso respeitando a hard
+	 *         constraints de curso
+	 *         </p>
 	 */
-	public int geraIndexCurso(){		
+	public int geraIndexCurso() {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
 		return aleatorio.nextInt(Arquivo.cursosEMC.size());
 	}
