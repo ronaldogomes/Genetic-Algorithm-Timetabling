@@ -25,13 +25,10 @@ public class Teste {
 	public static void main(String[] args) {
 		Arquivo.informacoesAg();
 		Arquivo.restricoesAg();
-	
-		int contador = 0;
 		Cromossomo cromo1 = new Cromossomo();
 		for (int i = 1; i < 169; i++) {
 			System.out.print(i + " ");
 			if (cromo1.getCromossomoHash().get(i) != null) {
-				contador += cromo1.getCromossomoHash().get(i).size();
 				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
 					System.out.print(
 							"[" + cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + "   ");
@@ -40,15 +37,10 @@ public class Teste {
 						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
 					}
 					System.out.print("}");
-
 				}
 			}
-
 			System.out.println("");
 		}
-
-		
-
 	}
 
 	// 

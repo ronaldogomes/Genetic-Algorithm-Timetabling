@@ -147,7 +147,7 @@ public class Cromossomo {
 			else
 				valida = false;
 		} while (valida);
-		System.out.println("teste");
+		
 		return aux;
 	}
 }
