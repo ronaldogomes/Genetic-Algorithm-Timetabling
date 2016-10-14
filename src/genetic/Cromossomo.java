@@ -206,15 +206,21 @@ public class Cromossomo {
 		boolean val = false;
 		do {
 			indexProfessorGerado = aleatorio.nextInt(Arquivo.professoresEMC.size());
-			if (cromossomoHash.get(indexTimeSlot) != null) {				
+			if (cromossomoHash.get(indexTimeSlot) != null) {
 				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeSlot).size(); indexArGene++) {
 						if (cromossomoHash.get(indexTimeSlot).get(indexArGene).getProfessor()
-								.getCodigo() == Arquivo.professoresEMC.get(indexProfessorGerado).getCodigo()) {
+								.getCodigo() == Arquivo.professoresEMC.get(indexProfessorGerado).getCodigo()){
 							val=true;
 						}else{
 							val=false;
 						}
 				}
+//				for (int i = 0; i <Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().size(); i++) {
+//					if(Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().get(i)
+//							.getCodigo() == indexTimeSlot){
+//	                        val = true;
+//					}
+//				}
 			} 
 		} while (val);
 		return indexProfessorGerado;
