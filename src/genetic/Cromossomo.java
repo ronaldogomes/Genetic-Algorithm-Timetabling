@@ -143,7 +143,7 @@ public class Cromossomo {
 		do {
 			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
 
-			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 					.getCodigo())
 				valida = true;
 			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
