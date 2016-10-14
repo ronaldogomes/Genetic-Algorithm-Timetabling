@@ -183,8 +183,15 @@ public class Cromossomo {
 	 */
 	public int geraIndexProfessor(int indexTimeSlot) {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
-		int aux = aleatorio.nextInt(Arquivo.professoresEMC.size());
-		return aux;
+		int indexProfessor;
+		boolean val = false;
+		do{
+		indexProfessor = aleatorio.nextInt(Arquivo.professoresEMC.size());
+		if(cromossomoHash.get(indexTimeSlot).isEmpty()){
+			return indexProfessor;
+		}
+		return indexProfessor;
+		}while(val);
 	}
 
 	/**
