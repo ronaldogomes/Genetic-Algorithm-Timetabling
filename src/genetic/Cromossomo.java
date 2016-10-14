@@ -32,10 +32,10 @@ public class Cromossomo {
 
 		// carregando cromossomo
 		do {
-			indexTSlot = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
-			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());
-					indexCurso = aleatorio.nextInt(Arquivo.cursosEMC.size());
-			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
+			indexTSlot = geraIndexTimeSlot();
+			indexProf = geraIndexProfessor(indexTSlot);//geraIndexDisc(indexTSlot);
+			indexCurso = geraIndexCurso();
+			indexSala = geraIndexSala();
 			indexDisc = geraIndexDisc(indexSala);
 
 			if (validaTS(indexTSlot)) {
@@ -166,7 +166,8 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexAluno() {
-		return 0;
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.alunosEMC.size());
 	}
 
 	/**
@@ -181,13 +182,13 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexProfessor(int indexTimeSlot) {
-		
-		return 0;
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.professoresEMC.size());
 	}
 
 	/**
 	 * 
-	 * @return
+	 * @return int - indexTimeSlot
 	 *         <h1>Descrição</h1>
 	 *         <p>
 	 *         método que gera index para um timeSlot do array de timeSlot
@@ -196,10 +197,27 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexTimeSlot() {
-		return 0;
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.listaTimeSlots.size());
 	}
-
+/**
+ * 
+ * @return
+ * <h2>Descrição</h2>
+ * <p>Método que gera um index aleatório para a sala respeitando as Hard Constraints físicas da sala</p>
+ */
 	public int geraIndexSala() {
-		return 0;
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.salasEMC.size());
+	}
+	/**
+	 * 
+	 * @return
+	 * <h2>Descrição</h2>
+	 * <p>Método que gera um index para o curso respeitando a hard constraints de curso</p>
+	 */
+	public int geraIndexCurso(){		
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.cursosEMC.size());
 	}
 }
