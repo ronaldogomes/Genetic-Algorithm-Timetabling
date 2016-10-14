@@ -37,15 +37,10 @@ public class Teste {
 						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
 					}
 					System.out.print("}");
-
 				}
 			}
-
 			System.out.println("");
 		}
-
-		
-
 	}
 
 	// 

@@ -233,7 +233,7 @@ public class Arquivo {
 								listaTimeSlotTemp.add(TimeSlots
 										.qualTimeSlot(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim())));
 							}
-							profTemp.setHorariosDisponiveis(listaTimeSlotTemp);
+							profTemp.setHorariosIndisponiveis(listaTimeSlotTemp);
 							Arquivo.professoresEMC.set(Arquivo.professoresEMC.indexOf(profTemp), profTemp);
 						}
 						i++;

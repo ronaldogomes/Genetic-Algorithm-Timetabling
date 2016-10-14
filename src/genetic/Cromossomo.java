@@ -32,8 +32,8 @@ public class Cromossomo {
 
 		// carregando cromossomo
 		do {
-			indexTSlot = geraIndexTimeSlot();
-			indexProf = geraIndexProfessor(indexTSlot);//geraIndexDisc(indexTSlot);
+			indexTSlot = geraIndexTimeSlot();//
+			indexProf = geraIndexProfessor(indexTSlot);
 			indexCurso = geraIndexCurso();
 			indexSala = geraIndexSala();
 			indexDisc = geraIndexDisc(indexSala);
@@ -183,7 +183,8 @@ public class Cromossomo {
 	 */
 	public int geraIndexProfessor(int indexTimeSlot) {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
-		return aleatorio.nextInt(Arquivo.professoresEMC.size());
+		int aux = aleatorio.nextInt(Arquivo.professoresEMC.size());
+		return aux;
 	}
 
 	/**
