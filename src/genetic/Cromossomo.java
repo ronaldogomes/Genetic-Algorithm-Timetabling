@@ -23,7 +23,6 @@ public class Cromossomo {
 	// Constructor
 	//
 
-	
 	public Cromossomo() {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// array de alunos aleatório
@@ -33,10 +32,10 @@ public class Cromossomo {
 
 		// carregando cromossomo
 		do {
-			indexProf = aleatorio.nextInt(Arquivo.professoresEMC.size());			
-			indexTSlot = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
-			indexCurso= aleatorio.nextInt(Arquivo.cursosEMC.size());
-			indexSala = aleatorio.nextInt(Arquivo.salasEMC.size());
+			indexTSlot = geraIndexTimeSlot();//
+			indexProf = geraIndexProfessor(indexTSlot);
+			indexCurso = geraIndexCurso();
+			indexSala = geraIndexSala();
 			indexDisc = geraIndexDisc(indexSala);
 
 			if (validaTS(indexTSlot)) {
@@ -48,18 +47,16 @@ public class Cromossomo {
 
 				}
 
-				insereGeneInCromossomo(
-						new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
-								Arquivo.disciplinasEMC.get(indexDisc), alunos,
-								Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
+				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
+						Arquivo.disciplinasEMC.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(indexTSlot),
+						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
 
 				i++;
 			}
-			
-		}while(i<Arquivo.disciplinasEMC.size());
+
+		} while (i < Arquivo.disciplinasEMC.size());
 
 	}
-
 
 	//
 	// Accessor methods
@@ -100,13 +97,17 @@ public class Cromossomo {
 		}
 
 	}
-    
+
 	/**
 	 * 
-	 * @param indexTSlot - c�digo do timeslot a ser consultado
-	 * @return boolean -  true se timeslot v�lido
-	 * <h2>Descri��o</h2>
-	 * <p>M�todo que verifica se um timeslot � v�lido quanto ao hor�rio de funcionamento da institui��o</p>
+	 * @param indexTSlot
+	 *            - código do timeslot a ser consultado
+	 * @return boolean - true se timeslot válido
+	 *         <h2>Descrição</h2>
+	 *         <p>
+	 * 		Método que verifica se um timeslot é válido quanto ao horário de
+	 *         funcionamento da instituição
+	 *         </p>
 	 */
 	public boolean validaTS(int indexTSlot) {
 		boolean valida = false;
@@ -123,31 +124,101 @@ public class Cromossomo {
 		}
 		return valida;
 	}
-	
+
 	/**
 	 * 
-	 * @param indexSala - index do arraylist de salas
-	 * @return int - c�digo de sala aleat�rio que combina com tipo da disciplina 
-	 * <h2>Descri��o</h2>
-	 * <p>M�todo que gera um index aleat�rio para disciplina ser alocada em uma sala garantindo que o 
-	 * tipo da sala alocada � o mesmo tipo de sala em que a disciplina deve ser ministrada</p>
+	 * @param indexSala
+	 *            - index do arraylist de salas
+	 * @return int - código de sala aleatório que combina com tipo da disciplina
+	 *         <h2>Descriçãoo</h2>
+	 *         <p>
+	 * 		Método que gera um index aleat�rio para disciplina ser alocada em
+	 *         uma sala garantindo que o tipo da sala alocada é o mesmo tipo de
+	 *         sala em que a disciplina deve ser ministrada
+	 *         </p>
 	 */
-	public int geraIndexDisc(int indexSala){
+	public int geraIndexDisc(int indexSala) {
 		boolean valida = false;
 		int aux;
 		do {
 			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
-			
-			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+
+			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 					.getCodigo())
 				valida = true;
-			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala).getTipoSala()
-					.getCodigo())
+			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
+					.getTipoSala().getCodigo())
 				valida = true;
 			else
 				valida = false;
 		} while (valida);
-		
 		return aux;
+	}
+
+	/**
+	 * 
+	 * @return
+	 *         <h1>Descrição</h1>
+	 *         <p>
+	 *         método que gera index para um aluno do array de Estudantes
+	 *         garantindo a hard constraint [um aluno não pode se matricular em
+	 *         duas disciplinas no mesmo timeSlot]
+	 *         </p>
+	 */
+	public int geraIndexAluno() {
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.alunosEMC.size());
+	}
+
+	/**
+	 * 
+	 * @return
+	 *         <h1>Descrição</h1>
+	 *         <p>
+	 *         método que gera index para um professor do array de professor
+	 *         garantindo a hard constraint [um professor não pode ministrar
+	 *         duas disciplinas no mesmo timeSlot e não pode ministrar em
+	 *         horario indisponivel]
+	 *         </p>
+	 */
+	public int geraIndexProfessor(int indexTimeSlot) {
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		int aux = aleatorio.nextInt(Arquivo.professoresEMC.size());
+		return aux;
+	}
+
+	/**
+	 * 
+	 * @return int - indexTimeSlot
+	 *         <h1>Descrição</h1>
+	 *         <p>
+	 *         método que gera index para um timeSlot do array de timeSlot
+	 *         garantindo a hard constraint [um timeSlot não pode ter duas
+	 *         disciplinas simultaneas]
+	 *         </p>
+	 */
+	public int geraIndexTimeSlot() {
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.listaTimeSlots.size());
+	}
+/**
+ * 
+ * @return
+ * <h2>Descrição</h2>
+ * <p>Método que gera um index aleatório para a sala respeitando as Hard Constraints físicas da sala</p>
+ */
+	public int geraIndexSala() {
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.salasEMC.size());
+	}
+	/**
+	 * 
+	 * @return
+	 * <h2>Descrição</h2>
+	 * <p>Método que gera um index para o curso respeitando a hard constraints de curso</p>
+	 */
+	public int geraIndexCurso(){		
+		// IMPLEMENTAR AS HARD CONSTRAINTS
+		return aleatorio.nextInt(Arquivo.cursosEMC.size());
 	}
 }
