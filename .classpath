@@ -2,7 +2,5 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/ronaldo/Downloads/poi.jar"/>
-	<classpathentry kind="lib" path="/home/ronaldo/workspace/Genetic-Algorithm-Timetabling/poi-3.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
