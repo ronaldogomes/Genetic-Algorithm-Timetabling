@@ -35,7 +35,7 @@ public class Cromossomo {
 			indexTSlot = geraIndexTimeSlot();//
 			indexProf = geraIndexProfessor(indexTSlot);
 			indexCurso = geraIndexCurso();
-			indexSala = geraIndexSala();
+			indexSala = geraIndexSala(indexTSlot);
 			indexDisc = geraIndexDisc(indexSala);
 
 			if (validaTS(indexTSlot)) {
@@ -215,6 +215,7 @@ public class Cromossomo {
 							val=false;
 						}
 				}
+//RESOLVER AMANHA HARDS CONTRAINTS =  PROFESSOR- HORARIOS INDISPONIVEIS
 //				for (int i = 0; i <Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().size(); i++) {
 //					if(Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().get(i)
 //							.getCodigo() == indexTimeSlot){
@@ -250,9 +251,25 @@ public class Cromossomo {
 	 *         Hard Constraints físicas da sala
 	 *         </p>
 	 */
-	public int geraIndexSala() {
+	public int geraIndexSala(int indexTimeslot) {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
-		return aleatorio.nextInt(Arquivo.salasEMC.size());
+		int indexSalaGerada;
+		boolean valida = false;
+		
+		do{
+			indexSalaGerada = aleatorio.nextInt(Arquivo.salasEMC.size());
+			if(cromossomoHash.get(indexTimeslot) != null){
+				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeslot).size(); indexArGene++) {
+					if(cromossomoHash.get(indexTimeslot).get(indexArGene).getSala().getCodigo() == Arquivo.salasEMC.get(indexSalaGerada).getCodigo()){
+						valida= true;
+					}else{
+						valida =false;
+					}
+				}
+			}
+			return 0;
+		}while(valida);
+		
 	}
 
 	/**
