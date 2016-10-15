@@ -36,7 +36,7 @@ public class Cromossomo {
 			indexProf = geraIndexProfessor(indexTSlot);
 			indexCurso = geraIndexCurso();
 			indexSala = geraIndexSala(indexTSlot);
-			indexDisc = geraIndexDisc(indexSala);
+			indexDisc = geraIndexDisc(indexTSlot, indexSala);
 
 			if (validaTS(indexTSlot)) {
 
@@ -137,21 +137,30 @@ public class Cromossomo {
 	 *         sala em que a disciplina deve ser ministrada
 	 *         </p>
 	 */
-	public int geraIndexDisc(int indexSala) {
+	public int geraIndexDisc(int indexTimeSlot, int indexSala) {
 		boolean valida = false;
+		boolean validaChoqTS=false;
 		int aux;
 		do {
 			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
-
+			//verifica se há choque de horário de disciplinas do mesmo período
+			if(cromossomoHash.get(indexTimeSlot)!=null){
+				for (int i = 0; i < cromossomoHash.get(indexTimeSlot).size(); i++) {
+					if(cromossomoHash.get(indexTimeSlot).get(i).getDisciplina().getCodigPeriodo()==Arquivo.disciplinasEMC.get(aux).getCodigPeriodo()){
+						validaChoqTS=true;
+					}
+				}
+			}
+			//verifica 
 			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 					.getCodigo())
-				valida = true;
+				valida = false;
 			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
 					.getTipoSala().getCodigo())
-				valida = true;
-			else
 				valida = false;
-		} while (valida);
+			else
+				valida = true;
+		} while (valida && validaChoqTS);
 		return aux;
 	}
 
@@ -178,13 +187,13 @@ public class Cromossomo {
 						;
 						if (cromossomoHash.get(indexTimeSlot).get(indexArGene).getAlunos().get(indexArrEst)
 								.getCodigo() == Arquivo.alunosEMC.get(indexAlunoGerado).getCodigo()) {
-							val=true;
-						}else{
-							val=false;
+							val = true;
+						} else {
+							val = false;
 						}
 					}
 				}
-			} 
+			}
 		} while (val);
 		return indexAlunoGerado;
 	}
