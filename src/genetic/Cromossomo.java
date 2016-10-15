@@ -256,6 +256,7 @@ public class Cromossomo {
 		int indexSalaGerada;
 		boolean valida = false;
 		
+		
 		do{
 			indexSalaGerada = aleatorio.nextInt(Arquivo.salasEMC.size());
 			if(cromossomoHash.get(indexTimeslot) != null){
@@ -263,6 +264,7 @@ public class Cromossomo {
 					if(cromossomoHash.get(indexTimeslot).get(indexArGene).getSala().getCodigo() == Arquivo.salasEMC.get(indexSalaGerada).getCodigo()){
 						valida= true;
 					}else{
+					
 						valida =false;
 					}
 				}
