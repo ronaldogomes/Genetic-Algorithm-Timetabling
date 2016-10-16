@@ -109,7 +109,7 @@ public class Cromossomo {
 	 *         funcionamento da instituição
 	 *         </p>
 	 */
-	public boolean validaTS(int indexTSlot) {
+	public static boolean validaTS(int indexTSlot) {
 		boolean valida = false;
 
 		for (int ds = 0; ds < 5; ds++) {
@@ -278,7 +278,7 @@ public class Cromossomo {
 					}
 				}
 			}
-			return 0;
+			return indexSalaGerada;
 		}while(valida);
 		
 	}
