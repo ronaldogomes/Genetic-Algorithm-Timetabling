@@ -10,24 +10,25 @@ import emc.TipoSala;
 import genetic.Cromossomo;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Scanner;
 
-import javax.swing.plaf.SliderUI;
+import jxl.write.*;
 
 public class Arquivo {
 	static Arquivo arquivo = new Arquivo();
 	public static ArrayList<Curso> cursosEMC;
-	public static ArrayList<Disciplina> disciplinasEMC ;
-	public static ArrayList<Estudante> alunosEMC ;
-	public static ArrayList<Professor> professoresEMC ;
+	public static ArrayList<Disciplina> disciplinasEMC;
+	public static ArrayList<Estudante> alunosEMC;
+	public static ArrayList<Professor> professoresEMC;
 	public static ArrayList<Sala> salasEMC;
 	public static ArrayList<TimeSlots> listaTimeSlots;
 	public static ArrayList<TipoSala> tipoSalaEMC;
-	
+
 	/**
 	 * 
 	 * @param nome
@@ -174,8 +175,8 @@ public class Arquivo {
 								"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
 							ArrayList<Disciplina> disciplinasCursar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasCursar.add(Disciplina.qualDisciplina(
-										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+								disciplinasCursar.add(Disciplina
+										.qualDisciplina(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							alunosEMC.add(new Estudante(Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim()),
 									infgormEntrArq.get(i).split(",")[1].trim(), disciplinasCursar));
@@ -190,8 +191,8 @@ public class Arquivo {
 							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasMinistrar.add(Disciplina.qualDisciplina(
-										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+								disciplinasMinistrar.add(Disciplina
+										.qualDisciplina(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}
@@ -203,7 +204,8 @@ public class Arquivo {
 	}
 
 	public static void restricoesAg() {
-		ArrayList<String> restricoesEntrArq = arquivo.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
+		ArrayList<String> restricoesEntrArq = arquivo
+				.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
 		for (int i = 0; i < restricoesEntrArq.size(); i++) {
 			if (!(restricoesEntrArq.get(i).matches("//.{0,}"))) {
 
@@ -212,10 +214,11 @@ public class Arquivo {
 					do {
 						if (restricoesEntrArq.get(i)
 								.matches("\\s{0,}\\d{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-							Disciplina discTemp = Disciplina.qualDisciplina(Integer.parseInt(restricoesEntrArq.get(i).split(",")[0].trim()));
+							Disciplina discTemp = Disciplina
+									.qualDisciplina(Integer.parseInt(restricoesEntrArq.get(i).split(",")[0].trim()));
 							ArrayList<Integer> discSlotObr = new ArrayList<>();
 							for (int j = 1; j < restricoesEntrArq.get(i).split(",").length; j++) {
-									discSlotObr.add(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim()));								
+								discSlotObr.add(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim()));
 							}
 							discTemp.setSlotObr(discSlotObr);
 						}
@@ -241,5 +244,104 @@ public class Arquivo {
 				}
 			}
 		}
+	}
+
+	public static void salvaCSV(Cromossomo cromossomo) {
+		File arquivo = new File("../Genetic-Algorithm-Timetabling/files/cromossomo.csv");
+		if (!arquivo.exists()) {
+			try {
+				arquivo.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		XLS exemplo = new XLS();
+		try {
+			
+			FileWriter fw = new FileWriter(arquivo, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			int i = 1;
+			bw.write(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+			bw.newLine();
+			bw.write(",,,ENGENHARIA DE COMPUTAÇÃO,,,,,,,,,,,,ENGENHARIA DE ELÉTRICA,,,,,,,,,,ENGENHARIA MECÂNICA,,,,,,,,,");
+			bw.newLine();
+			bw.write(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+			bw.newLine();
+			bw.write(",,,períodos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+			bw.newLine();
+			do {
+				if (cromossomo.getCromossomoHash().get(i) != null && Cromossomo.validaTS(i)) {
+					for(int j=0; j<cromossomo.getCromossomoHash().get(i).size();j++){
+						switch ((i+23)/24) {
+						case 1:	
+								exemplo.setOutputFile("/home/ronaldo/Área de Trabalho/ExemploJExcel.xls");
+								exemplo.insere(1,1);
+							break;
+						case 2:		
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+						case 3:		
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+						case 4:							
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+						case 5:							
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+						case 6:							
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+						case 7:							
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
+							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+							break;
+
+						default:
+							break;
+						}
+	
+					}
+					bw.newLine();
+				}else if(cromossomo.getCromossomoHash().get(i) == null && Cromossomo.validaTS(i)){
+					bw.write(",");
+					bw.newLine();
+				}
+				
+				i++;
+			} while (i < 169);
+
+			bw.close();
+			fw.close();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 }

@@ -9,7 +9,6 @@ import emc.Disciplina;
 import emc.Estudante;
 import emc.Professor;
 import emc.Sala;
-import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
 
@@ -41,6 +40,7 @@ public class Teste {
 			}
 			System.out.println("");
 		}
+		Arquivo.salvaCSV(cromo1);
 	}
 
 	// 

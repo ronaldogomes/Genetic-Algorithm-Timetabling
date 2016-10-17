@@ -1,11 +1,6 @@
 package emc;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
-
 import entr_saida.Arquivo;
-import entr_saida.Teste;
 
 
 

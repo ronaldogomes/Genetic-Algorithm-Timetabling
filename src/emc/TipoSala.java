@@ -1,7 +1,5 @@
 package emc;
 
-import java.util.ArrayList;
-
 import entr_saida.Arquivo;
 
 public class TipoSala {
