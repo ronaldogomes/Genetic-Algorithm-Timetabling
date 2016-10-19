@@ -9,9 +9,9 @@ import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
 
+import java.io.File;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -270,55 +270,40 @@ public class Arquivo {
 			bw.newLine();
 			bw.write(",,,períodos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
 			bw.newLine();
+			
+			exemplo.setOutputFile("/home/ronaldo/Área de Trabalho/ExemploJExcel.xls");
+			//exemplo.criaLabel();
 			do {
 				if (cromossomo.getCromossomoHash().get(i) != null && Cromossomo.validaTS(i)) {
 					for(int j=0; j<cromossomo.getCromossomoHash().get(i).size();j++){
 						switch ((i+23)/24) {
 						case 1:	
-								exemplo.setOutputFile("/home/ronaldo/Área de Trabalho/ExemploJExcel.xls");
-								exemplo.insere(1,1);
+								exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
 							break;
 						case 2:		
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
 							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
 							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
 							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
 							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
 							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
 							break;
-						case 3:		
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+						case 3:	
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
 							break;
-						case 4:							
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+						case 4:	
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
 							break;
-						case 5:							
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+						case 5:		
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
+		
 							break;
-						case 6:							
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+						case 6:			
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1); 
 							break;
-						case 7:							
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
+						case 7:		
+							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
+		
 							break;
 
 						default:
