@@ -15,7 +15,10 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import jxl.write.*;
 
@@ -248,7 +251,8 @@ public class Arquivo {
 
 	public static void salvaXLS(Cromossomo cromossomo) {
 		XLS exemplo = new XLS();
-			exemplo.setOutputFile("../Genetic-Algorithm-Timetabling/files/cromossomo.xls");
+			String fileName = "../Genetic-Algorithm-Timetabling/files/cromossomo"+new SimpleDateFormat("_dd.MM.yyyy_HH.mm.ss").format(Calendar.getInstance().getTime())+".xls";
+			exemplo.setOutputFile(fileName);
 			exemplo.insere(cromossomo);
 
 
