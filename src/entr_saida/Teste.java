@@ -25,22 +25,23 @@ public class Teste {
 		Arquivo.informacoesAg();
 		Arquivo.restricoesAg();
 		Cromossomo cromo1 = new Cromossomo();
-		for (int i = 1; i < 169; i++) {
-			System.out.print(i + " ");
-			if (cromo1.getCromossomoHash().get(i) != null) {
-				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
-					System.out.print(
-							"[" + cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + "   ");
-					System.out.print(" > " + cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome() + "] {");
-					for (int j2 = 0; j2 < cromo1.getCromossomoHash().get(i).get(j).getAlunos().size(); j2++) {
-						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
-					}
-					System.out.print("}");
-				}
-			}
-			System.out.println("");
-		}
-		Arquivo.salvaCSV(cromo1);
+//		for (int i = 1; i < 169; i++) {
+//			System.out.print(i + " ");
+//			if (cromo1.getCromossomoHash().get(i) != null) {
+//				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
+//					System.out.print(
+//							"[" + cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + "   ");
+//					System.out.print(" > " + cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome() + "] {");
+//					for (int j2 = 0; j2 < cromo1.getCromossomoHash().get(i).get(j).getAlunos().size(); j2++) {
+//						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
+//					}
+//					System.out.print("}");
+//				}
+//			}
+//			System.out.println("");
+//		}
+		Arquivo.salvaXLS(cromo1);
+		System.out.println("salvo xls");
 	}
 
 	// 

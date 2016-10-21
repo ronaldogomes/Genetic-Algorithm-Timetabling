@@ -43,7 +43,7 @@ public class Gene {
 	public String toString() {
 		// TODO Auto-generated method stub
 		String retorno = this.getSala().getDescricao() + " " + this.getDisciplina().getDescricao() + "   "
-				+ this.getProfessor().getNome()+"  "+this.getTimeslots().getData()+"  DS "+this.getTimeslots().getCodDiaSemana()+" qtd alunos "+this.getAlunos().size();
+				+ this.getProfessor().getNome()+"  "+this.getTimeslots().getHora()+"  DS "+this.getTimeslots().getCodDiaSemana()+" qtd alunos "+this.getAlunos().size();
 		return retorno;
 	}
 
