@@ -1,5 +1,7 @@
 package emc;
 
+import java.util.Date;
+
 import entr_saida.Arquivo;
 
 
@@ -17,7 +19,8 @@ public class TimeSlots {
    * Um numero natural maior que zero que indentifica de forma unica timeslot. 7) das 7h as 7h59min, 8) das 8h as 8h59min
    */
   private int codigo;
-  private String data;
+  private String hora;
+  Date date;
   /**
    * 1-domingo, 2-segunda, 3-terça, 4-quarta, 5-quinta e 6-sexta
    */
@@ -30,6 +33,8 @@ public class TimeSlots {
   public TimeSlots (int codigo, int codDiaSemana, String horaIncioFim) { 
 	  this.codigo=codigo;
 	  this.codDiaSemana=codDiaSemana;
+	  this.hora=horaIncioFim;
+
 	  
   };
   
@@ -98,11 +103,11 @@ public class TimeSlots {
   public int getCodDiaSemana () {
     return codDiaSemana;
   }
-public String getData() {
-	return data;
+public String getHora() {
+	return hora;
 }
-public void setData(String data) {
-	this.data = data;
+public void setHora(String data) {
+	this.hora = data;
 }
 
   //
