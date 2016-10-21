@@ -113,7 +113,7 @@ public class Arquivo {
 							Integer codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0]);
 							Integer codDiaSemana = Integer.parseInt(infgormEntrArq.get(i).split(",")[1]);
 							String horaIncioFim = infgormEntrArq.get(i).split(",")[2] + ","
-									+ infgormEntrArq.get(i).split(",")[2];
+									+ infgormEntrArq.get(i).split(",")[3];
 							listaTimeSlots.add(new TimeSlots(codigo, codDiaSemana, horaIncioFim));
 						}
 						i++;
@@ -246,87 +246,12 @@ public class Arquivo {
 		}
 	}
 
-	public static void salvaCSV(Cromossomo cromossomo) {
-		File arquivo = new File("../Genetic-Algorithm-Timetabling/files/cromossomo.csv");
-		if (!arquivo.exists()) {
-			try {
-				arquivo.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+	public static void salvaXLS(Cromossomo cromossomo) {
 		XLS exemplo = new XLS();
-		try {
-			
-			FileWriter fw = new FileWriter(arquivo, true);
-			BufferedWriter bw = new BufferedWriter(fw);
-			int i = 1;
-			bw.write(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-			bw.newLine();
-			bw.write(",,,ENGENHARIA DE COMPUTAÇÃO,,,,,,,,,,,,ENGENHARIA DE ELÉTRICA,,,,,,,,,,ENGENHARIA MECÂNICA,,,,,,,,,");
-			bw.newLine();
-			bw.write(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-			bw.newLine();
-			bw.write(",,,períodos,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
-			bw.newLine();
-			
-			exemplo.setOutputFile("/home/ronaldo/Área de Trabalho/ExemploJExcel.xls");
-			//exemplo.criaLabel();
-			do {
-				if (cromossomo.getCromossomoHash().get(i) != null && Cromossomo.validaTS(i)) {
-					for(int j=0; j<cromossomo.getCromossomoHash().get(i).size();j++){
-						switch ((i+23)/24) {
-						case 1:	
-								exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-							break;
-						case 2:		
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getProfessor().getNome() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getSala().getDescricao() + " ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getCurso().getNome() + "  ");
-							bw.write(cromossomo.getCromossomoHash().get(i).get(j).getAlunos().get(0).getNome() + " ,");
-							break;
-						case 3:	
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-							break;
-						case 4:	
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-							break;
-						case 5:		
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-		
-							break;
-						case 6:			
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1); 
-							break;
-						case 7:		
-							exemplo.insere(cromossomo.getCromossomoHash().get(i).get(j),1,1);
-		
-							break;
+			exemplo.setOutputFile("../Genetic-Algorithm-Timetabling/files/cromossomo.xls");
+			exemplo.insere(cromossomo);
 
-						default:
-							break;
-						}
-	
-					}
-					bw.newLine();
-				}else if(cromossomo.getCromossomoHash().get(i) == null && Cromossomo.validaTS(i)){
-					bw.write(",");
-					bw.newLine();
-				}
-				
-				i++;
-			} while (i < 169);
 
-			bw.close();
-			fw.close();
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 	}
 }
