@@ -33,7 +33,7 @@ public class Teste {
 //							"[" + cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + "   ");
 //					System.out.print(" > " + cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome() + "] {");
 //					for (int j2 = 0; j2 < cromo1.getCromossomoHash().get(i).get(j).getAlunos().size(); j2++) {
-//						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", ");
+//						System.out.print(cromo1.getCromossomoHash().get(i).get(j).getAlunos().get(j2).getNome() + ", "+cromo1.getCromossomoHash().get(i).get(j2).getDisciplina().getCargaHorariaTeorica());
 //					}
 //					System.out.print("}");
 //				}
@@ -41,6 +41,7 @@ public class Teste {
 //			System.out.println("");
 //		}
 		Arquivo.salvaXLS(cromo1);
+				
 		System.out.println("salvo xls");
 	}
 

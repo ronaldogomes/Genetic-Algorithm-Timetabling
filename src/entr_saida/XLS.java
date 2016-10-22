@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.util.Locale;
 
 import genetic.Cromossomo;
-import genetic.Gene;
 import jxl.CellView;
 import jxl.Workbook;
 import jxl.WorkbookSettings;
 import jxl.write.Formula;
 import jxl.write.Label;
-import jxl.write.Number;
 import jxl.write.WritableCellFormat;
 import jxl.write.WritableFont;
 import jxl.write.WritableSheet;

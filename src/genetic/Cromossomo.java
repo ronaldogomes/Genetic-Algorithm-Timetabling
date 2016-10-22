@@ -17,6 +17,7 @@ public class Cromossomo {
 	//
 	private Hashtable<Integer, ArrayList<Gene>> cromossomoHash;
 	private Random aleatorio = new Random();
+	public ArrayList<Disciplina> disciplinasTemp = new ArrayList<>();;
 	// index aleatório dos arrays
 	private int indexProf, indexSala, indexDisc, indexTSlot, indexCurso;
 	//
@@ -27,6 +28,7 @@ public class Cromossomo {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// array de alunos aleatório
 		ArrayList<Estudante> alunos;
+		disciplinasTemp.addAll(Arquivo.disciplinasEMC);
 
 		int i = 0;
 
@@ -46,15 +48,17 @@ public class Cromossomo {
 					alunos.add(Arquivo.alunosEMC.get(indexAl));
 
 				}
-
+		
 				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
-						Arquivo.disciplinasEMC.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(indexTSlot),
+						disciplinasTemp.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(indexTSlot),
 						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
-
-				i++;
+				if(disciplinasTemp.get(indexDisc).getCargaHorariaPratica()==0 && disciplinasTemp.get(indexDisc).getCargaHorariaTeorica()==0){
+					disciplinasTemp.remove(indexDisc);
+				}
+				
 			}
-
-		} while (i < Arquivo.disciplinasEMC.size());
+			i++;
+		} while (disciplinasTemp.size()>0 && i<1240);
 
 	}
 
@@ -86,7 +90,6 @@ public class Cromossomo {
 
 	public void insereGeneInCromossomo(Gene gene, Integer codigoTimeSlot) {
 		ArrayList<Gene> geneArray = new ArrayList<>();
-
 		if (cromossomoHash.get(codigoTimeSlot) == null) {
 			geneArray.add(gene);
 			this.cromossomoHash.put(codigoTimeSlot, geneArray);
@@ -142,23 +145,25 @@ public class Cromossomo {
 		boolean validaChoqTS=false;
 		int aux;
 		do {
-			aux = aleatorio.nextInt(Arquivo.disciplinasEMC.size());
+			aux = aleatorio.nextInt(disciplinasTemp.size());
 			//verifica se há choque de horário de disciplinas do mesmo período
 			if(cromossomoHash.get(indexTimeSlot)!=null){
 				for (int i = 0; i < cromossomoHash.get(indexTimeSlot).size(); i++) {
-					if(cromossomoHash.get(indexTimeSlot).get(i).getDisciplina().getCodigPeriodo()==Arquivo.disciplinasEMC.get(aux).getCodigPeriodo()){
+					if(cromossomoHash.get(indexTimeSlot).get(i).getDisciplina().getCodigPeriodo()==disciplinasTemp.get(aux).getCodigPeriodo()){
 						validaChoqTS=true;
 					}
 				}
 			}
 			//verifica 
-			if (Arquivo.disciplinasEMC.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
-					.getCodigo())
+			if (disciplinasTemp.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+					.getCodigo()&& disciplinasTemp.get(aux).getCargaHorariaTeorica()>0){
+				disciplinasTemp.get(aux).setCargaHorariaTeorica(disciplinasTemp.get(aux).getCargaHorariaTeorica()-1);
 				valida = false;
-			else if (Arquivo.disciplinasEMC.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
-					.getTipoSala().getCodigo())
+			}else if (disciplinasTemp.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
+					.getTipoSala().getCodigo() && disciplinasTemp.get(aux).getCargaHorariaPratica()>0){
+				disciplinasTemp.get(aux).setCargaHorariaPratica(disciplinasTemp.get(aux).getCargaHorariaPratica()-1);
 				valida = false;
-			else
+			}else
 				valida = true;
 		} while (valida && validaChoqTS);
 		return aux;
