@@ -250,30 +250,17 @@ public class Cromossomo {
 		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
 			// dado um professor fixo varrer as disciplinas que ele pode ministrar 
 			for (int j = 0; j < Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().size(); j++) {
-				//teste para ver a validade da disciplina quanto ao professor
+				//professores que ministra essa disciplina
 				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == Arquivo.disciplinasEMC
 						.get(indexDisc).getCodigo()) {
+					//até aqui esse arrayList de professores que ministram essa disciplina
+					professoresDisp.add(Arquivo.professoresEMC.get(i));
 					
-					//fixado o professor, varrer as listas de horarios(fixa e dinamica) que ele esta ocupado
-					for (int j2 = 0; j2 < Arquivo.professoresEMC.get(i).getListaTSIndFixa().size(); j2++) {
-						if (Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2).getCodigo() != Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()){
-							//se os horarios da lista for diferente do horario escolhido, adiciona o professor em uma lista de professores validos	
-							//professoresDisp.add(Arquivo.professoresEMC.get(i));
-							x1 = true;
-						}else x1=false;
-					}
-					
-					if(!Arquivo.professoresEMC.get(i).getListaTSIndDinamic().isEmpty()){
-					for(int j3 = 0; j3 < Arquivo.professoresEMC.get(i).getListaTSIndDinamic().size();j3++){
-						if(Arquivo.professoresEMC.get(i).getListaTSIndDinamic().get(j3) != indexTimeSlot){
-							x2 = true;
-						}else x2=false;
-					}
-				}else x2=true;
 					
 				}
 			}
 		}
+		System.out.println(professoresDisp.size());
 		//na hoora do retorno resolver null e LEMBRAR DE ADICIONAR
 		Professor profGerado = professoresDisp.get(aleatorio.nextInt(professoresDisp.size()));
 		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
