@@ -7,9 +7,12 @@ public class CrossOver {
 
 	public Cromossomo child1, child2;
 
-	CrossOver(Cromossomo parent1, Cromossomo parent2) {
-		for (int i = 0; i < parent1.getCromossomoHash().size() / 2; i++) {
-
+	public CrossOver(Cromossomo parent1, Cromossomo parent2) {
+		child1 = new Cromossomo();
+		child2 = new Cromossomo();
+		int max = parent1.getCromossomoHash().size() / 2;
+		for (int i = 0; i < max; i++) {
+			//
 		}
 
 	}

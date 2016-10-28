@@ -9,18 +9,14 @@ import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
 
-import java.io.File;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Date;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import jxl.write.*;
 
 public class Arquivo {
 	static Arquivo arquivo = new Arquivo();
@@ -52,7 +48,6 @@ public class Arquivo {
 		} catch (IOException e) {
 			System.err.printf("Erro na abertura do arquivo: %s.\n", e.getMessage());
 		}
-		System.out.println();
 		return retorno;
 	}
 
@@ -239,7 +234,8 @@ public class Arquivo {
 								listaTimeSlotTemp.add(TimeSlots
 										.qualTimeSlot(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim())));
 							}
-							profTemp.setHorariosIndisponiveis(listaTimeSlotTemp);
+							
+							profTemp.setListaTSIndFixa(listaTimeSlotTemp);
 							Arquivo.professoresEMC.set(Arquivo.professoresEMC.indexOf(profTemp), profTemp);
 						}
 						i++;

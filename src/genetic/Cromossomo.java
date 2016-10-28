@@ -17,9 +17,10 @@ public class Cromossomo {
 	//
 	private Hashtable<Integer, ArrayList<Gene>> cromossomoHash;
 	private Random aleatorio = new Random();
-	public ArrayList<Disciplina> disciplinasTemp = new ArrayList<>();;
+	public ArrayList<Disciplina> disciplinasTemp;
+	public int controlCargHor[][];
 	// index aleatório dos arrays
-	private int indexProf, indexSala, indexDisc, indexTSlot, indexCurso;
+	// private
 	//
 	// Constructor
 	//
@@ -28,38 +29,77 @@ public class Cromossomo {
 		this.cromossomoHash = new Hashtable<Integer, ArrayList<Gene>>();
 		// array de alunos aleatório
 		ArrayList<Estudante> alunos;
-		disciplinasTemp.addAll(Arquivo.disciplinasEMC);
-
+		disciplinasTemp = copyArrayListDisc(Arquivo.disciplinasEMC);
 		int i = 0;
-
+		int contIncDiscCrom = 0;
+		int indexDiscAnt = -1;
+		boolean manterLupDisc;
 		// carregando cromossomo
+		int indexProf, indexSala, indexDisc, indexCurso;
+		int indexTSlot;
 		do {
-			indexTSlot = geraIndexTimeSlot();//
-			indexProf = geraIndexProfessor(indexTSlot);
-			indexCurso = geraIndexCurso();
-			indexSala = geraIndexSala(indexTSlot);
-			indexDisc = geraIndexDisc(indexTSlot, indexSala);
+			indexDisc = geraIndexDisc();
 
-			if (validaTS(indexTSlot)) {
+			Disciplina copyDisc = new Disciplina(disciplinasTemp.get(indexDisc).getCodigo(),
+					disciplinasTemp.get(indexDisc).getCodigoCurso(), disciplinasTemp.get(indexDisc).getCodigPeriodo(),
+					disciplinasTemp.get(indexDisc).getDescricao(),
+					disciplinasTemp.get(indexDisc).getCargaHorariaTeorica(),
+					disciplinasTemp.get(indexDisc).getTipoSalaTeoria(),
+					disciplinasTemp.get(indexDisc).getCargaHorariaPratica(),
+					disciplinasTemp.get(indexDisc).getTipoSalaPratica());
 
-				alunos = new ArrayList<>();
-				for (int a = 0; a < Arquivo.salasEMC.get(indexSala).getCapacidade(); a++) {
-					int indexAl = aleatorio.nextInt(Arquivo.alunosEMC.size() - 1);
-					alunos.add(Arquivo.alunosEMC.get(indexAl));
+			// PREENCHER TODA CARGA HORARIA DA DISCIPLINA
+			do {
+				indexTSlot = geraIndexTimeSlot();
+				manterLupDisc = true;
+				indexCurso = disciplinasTemp.get(indexDisc).getCodigoCurso() - 1;
+				indexProf = geraIndexProfessor(indexTSlot, indexDisc);
+				if (indexProf == -1) {
+					indexDiscAnt = indexDisc;
+					contIncDiscCrom++;
+					break;
+				} else
+					contIncDiscCrom = 0;
+				indexSala = geraIndexSala(indexTSlot, indexDisc);
+				alunos = geraArrayAlunos(indexTSlot, indexDisc);
+				if (insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf),
+						Arquivo.salasEMC.get(indexSala), disciplinasTemp.get(indexDisc), alunos,
+						Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), indexTSlot)) {
+					
+					if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala)
+							.getTipoSala().getCodigo())
+							&& (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
+						// decrementa CHT
+						decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 1);
+					} else if (disciplinasTemp.get(indexDisc).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
+							.getTipoSala().getCodigo() && disciplinasTemp.get(indexDisc).getCargaHorariaPratica() > 0) {
+						// decrementa CHP
+						decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 2);
 
+					}
 				}
-		
-				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf), Arquivo.salasEMC.get(indexSala),
-						disciplinasTemp.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(indexTSlot),
-						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(indexTSlot).getCodigo());
-				if(disciplinasTemp.get(indexDisc).getCargaHorariaPratica()==0 && disciplinasTemp.get(indexDisc).getCargaHorariaTeorica()==0){
+				if (disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0
+						&& disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0) {
+					manterLupDisc = false;
 					disciplinasTemp.remove(indexDisc);
 				}
-				
+			} while (manterLupDisc);
+			if (contIncDiscCrom > 0) {
+				disciplinasTemp.set(indexDisc, copyDisc);
+				System.out.println(removeDisciplinaCromossomo(disciplinasTemp.get(indexDisc).getCodigo()));
 			}
-			i++;
-		} while (disciplinasTemp.size()>0 && i<1240);
+			contIncDiscCrom = 0;
 
+			i++;
+
+		} while (disciplinasTemp.size() > 0 && i < 500);
+		// verdadeiro verdadeiro = falso
+	}
+
+	private ArrayList<Estudante> geraArrayAlunos(int indexTSlot, int indexDisc) {
+		// criar um arrayList de alunos garantindo as hard
+		ArrayList<Estudante> alunos = new ArrayList<>();
+		return alunos;
 	}
 
 	//
@@ -88,15 +128,28 @@ public class Cromossomo {
 	 *            </p>
 	 */
 
-	public void insereGeneInCromossomo(Gene gene, Integer codigoTimeSlot) {
+	public boolean insereGeneInCromossomo(Gene gene, Integer codigoTimeSlot) {
 		ArrayList<Gene> geneArray = new ArrayList<>();
 		if (cromossomoHash.get(codigoTimeSlot) == null) {
 			geneArray.add(gene);
 			this.cromossomoHash.put(codigoTimeSlot, geneArray);
+			return true;
 		} else {
 			geneArray = cromossomoHash.get(codigoTimeSlot);
 			geneArray.add(gene);
 			cromossomoHash.put(codigoTimeSlot, geneArray);
+			return true;
+		}
+	}
+
+	public void decrementaCargaHoraria(Disciplina disciplina, int ch) {
+		switch (ch) {
+		case 1:
+			disciplina.setCargaHorariaTeorica(disciplina.getCargaHorariaTeorica() - 1);
+			break;
+		case 2:
+			disciplina.setCargaHorariaPratica(disciplina.getCargaHorariaPratica() - 1);
+			break;
 		}
 
 	}
@@ -140,33 +193,8 @@ public class Cromossomo {
 	 *         sala em que a disciplina deve ser ministrada
 	 *         </p>
 	 */
-	public int geraIndexDisc(int indexTimeSlot, int indexSala) {
-		boolean valida = false;
-		boolean validaChoqTS=false;
-		int aux;
-		do {
-			aux = aleatorio.nextInt(disciplinasTemp.size());
-			//verifica se há choque de horário de disciplinas do mesmo período
-			if(cromossomoHash.get(indexTimeSlot)!=null){
-				for (int i = 0; i < cromossomoHash.get(indexTimeSlot).size(); i++) {
-					if(cromossomoHash.get(indexTimeSlot).get(i).getDisciplina().getCodigPeriodo()==disciplinasTemp.get(aux).getCodigPeriodo()){
-						validaChoqTS=true;
-					}
-				}
-			}
-			//verifica 
-			if (disciplinasTemp.get(aux).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
-					.getCodigo()&& disciplinasTemp.get(aux).getCargaHorariaTeorica()>0){
-				disciplinasTemp.get(aux).setCargaHorariaTeorica(disciplinasTemp.get(aux).getCargaHorariaTeorica()-1);
-				valida = false;
-			}else if (disciplinasTemp.get(aux).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
-					.getTipoSala().getCodigo() && disciplinasTemp.get(aux).getCargaHorariaPratica()>0){
-				disciplinasTemp.get(aux).setCargaHorariaPratica(disciplinasTemp.get(aux).getCargaHorariaPratica()-1);
-				valida = false;
-			}else
-				valida = true;
-		} while (valida && validaChoqTS);
-		return aux;
+	public int geraIndexDisc() {
+		return aleatorio.nextInt(disciplinasTemp.size());
 	}
 
 	/**
@@ -181,6 +209,7 @@ public class Cromossomo {
 	 */
 	public int geraIndexAluno(int indexTimeSlot) {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
+		// aluno não deve pegar mais de uma disciplina no mesmo timeslot
 		int indexAlunoGerado;
 		boolean val = false;
 		do {
@@ -189,7 +218,6 @@ public class Cromossomo {
 				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeSlot).size(); indexArGene++) {
 					for (int indexArrEst = 0; indexArrEst < cromossomoHash.get(indexTimeSlot).get(indexArGene)
 							.getAlunos().size(); indexArrEst++) {
-						;
 						if (cromossomoHash.get(indexTimeSlot).get(indexArGene).getAlunos().get(indexArrEst)
 								.getCodigo() == Arquivo.alunosEMC.get(indexAlunoGerado).getCodigo()) {
 							val = true;
@@ -214,31 +242,45 @@ public class Cromossomo {
 	 *         horario indisponivel]
 	 *         </p>
 	 */
-	public int geraIndexProfessor(int indexTimeSlot) {
-		// IMPLEMENTAR AS HARD CONSTRAINTS
-		int indexProfessorGerado;
-		boolean val = false;
-		do {
-			indexProfessorGerado = aleatorio.nextInt(Arquivo.professoresEMC.size());
-			if (cromossomoHash.get(indexTimeSlot) != null) {
-				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeSlot).size(); indexArGene++) {
-						if (cromossomoHash.get(indexTimeSlot).get(indexArGene).getProfessor()
-								.getCodigo() == Arquivo.professoresEMC.get(indexProfessorGerado).getCodigo()){
-							val=true;
-						}else{
-							val=false;
-						}
+	public int geraIndexProfessor(int indexTimeSlot, int indexDisc) {
+		Integer indexProfessorGerado;
+		boolean x1, x2;
+		ArrayList<Professor> professoresDisp = new ArrayList<>();
+		//varrendo o arrayList professores
+		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
+			// dado um professor fixo varrer as disciplinas que ele pode ministrar 
+			for (int j = 0; j < Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().size(); j++) {
+				//teste para ver a validade da disciplina quanto ao professor
+				
+				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == Arquivo.disciplinasEMC
+						.get(indexDisc).getCodigo()) {
+					//fixado o professor, varrer as listas de horarios(fixa e dinamica) que ele esta ocupado
+					
+					for (int j2 = 0; j2 < Arquivo.professoresEMC.get(i).getListaTSIndFixa().size(); j2++) {
+						if (Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2).getCodigo() != Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()){
+							//se os horarios da lista for diferente do horario escolhido, adiciona o professor em uma lista de professores validos	
+							//professoresDisp.add(Arquivo.professoresEMC.get(i));
+							x1 = true;
+						}else x1=false;
+					}
+					
+					if(!Arquivo.professoresEMC.get(i).getListaTSIndDinamic().isEmpty()){
+					for(int j3 = 0; j3 < Arquivo.professoresEMC.get(i).getListaTSIndDinamic().size();j3++){
+						if(Arquivo.professoresEMC.get(i).getListaTSIndDinamic().get(j3) != indexTimeSlot){
+							x2 = true;
+						}else x2=false;
+					}
+				}else x2=true;
+					
 				}
-//RESOLVER AMANHA HARDS CONTRAINTS =  PROFESSOR- HORARIOS INDISPONIVEIS
-//				for (int i = 0; i <Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().size(); i++) {
-//					if(Arquivo.professoresEMC.get(indexProfessorGerado).getHorariosIndisponiveis().get(i)
-//							.getCodigo() == indexTimeSlot){
-//	                        val = true;
-//					}
-//				}
-			} 
-		} while (val);
-		return indexProfessorGerado;
+			}
+		}
+		//na hoora do retorno resolver null e LEMBRAR DE ADICIONAR
+		indexProfessorGerado=Arquivo.professoresEMC.indexOf(Arquivo.professoresEMC.indexOf(professoresDisp.get(aleatorio.nextInt(professoresDisp.size()))));
+		if(indexProfessorGerado!=null){
+			Arquivo.professoresEMC.get(indexProfessorGerado).getListaTSIndDinamic().add(indexTimeSlot);
+		}
+		return indexProfessorGerado ;
 	}
 
 	/**
@@ -252,8 +294,11 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexTimeSlot() {
-		// IMPLEMENTAR AS HARD CONSTRAINTS
-		return aleatorio.nextInt(Arquivo.listaTimeSlots.size());
+		int indexTSGerado;
+		do {
+			indexTSGerado = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
+		} while (!validaTS(indexTSGerado));
+		return indexTSGerado;
 	}
 
 	/**
@@ -265,27 +310,38 @@ public class Cromossomo {
 	 *         Hard Constraints físicas da sala
 	 *         </p>
 	 */
-	public int geraIndexSala(int indexTimeslot) {
-		// IMPLEMENTAR AS HARD CONSTRAINTS
+	public int geraIndexSala(int indexTimeslot, int indexDisc) {
 		int indexSalaGerada;
-		boolean valida = false;
-		
-		
-		do{
+		boolean manterLupe;
+		int cont = 0;
+		do {
+			manterLupe = true;
 			indexSalaGerada = aleatorio.nextInt(Arquivo.salasEMC.size());
-			if(cromossomoHash.get(indexTimeslot) != null){
-				for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeslot).size(); indexArGene++) {
-					if(cromossomoHash.get(indexTimeslot).get(indexArGene).getSala().getCodigo() == Arquivo.salasEMC.get(indexSalaGerada).getCodigo()){
-						valida= true;
-					}else{
-					
-						valida =false;
-					}
+			// se a sala gerada não estiver ocupada naquele timeslot
+			if (eSalaLivre(indexSalaGerada, indexTimeslot)) {
+				if (disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSalaGerada)
+						.getTipoSala().getCodigo()
+						|| disciplinasTemp.get(indexDisc).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSalaGerada)
+								.getTipoSala().getCodigo() && disciplinasTemp.get(indexDisc).getTipoSalaPratica() > 0) {
+					manterLupe = false;
 				}
 			}
-			return indexSalaGerada;
-		}while(valida);
-		
+			cont++;
+		} while (manterLupe || cont < 1000);
+		return indexSalaGerada;
+
+	}
+
+	private boolean eSalaLivre(int indexSalaGerada, int indexTimeslot) {
+		if (cromossomoHash.containsKey(indexTimeslot)) {
+			for (int indexArGene = 0; indexArGene < cromossomoHash.get(indexTimeslot).size(); indexArGene++) {
+				if (cromossomoHash.get(indexTimeslot).get(indexArGene).getSala().getCodigo() == Arquivo.salasEMC
+						.get(indexSalaGerada).getCodigo()) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -300,5 +356,41 @@ public class Cromossomo {
 	public int geraIndexCurso() {
 		// IMPLEMENTAR AS HARD CONSTRAINTS
 		return aleatorio.nextInt(Arquivo.cursosEMC.size());
+	}
+
+	public ArrayList<Disciplina> copyArrayListDisc(ArrayList<Disciplina> disc) {
+		int codigo, codigoCurso, codigoPeriodo, cargaHorariaTeoria, tipoSalaTeoria, cargaHorariaPratica,
+				tipoSalaPratica;
+		String descricao;
+		ArrayList<Disciplina> discRetorno = new ArrayList<>();
+		for (int i = 0; i < disc.size(); i++) {
+			codigo = disc.get(i).getCodigo();
+			codigoCurso = disc.get(i).getCodigoCurso();
+			codigoPeriodo = disc.get(i).getCodigPeriodo();
+			descricao = disc.get(i).getDescricao();
+			cargaHorariaTeoria = disc.get(i).getCargaHorariaTeorica();
+			tipoSalaTeoria = disc.get(i).getTipoSalaTeoria();
+			cargaHorariaPratica = disc.get(i).getCargaHorariaPratica();
+			tipoSalaPratica = disc.get(i).getTipoSalaPratica();
+
+			discRetorno.add(new Disciplina(codigo, codigoCurso, codigoPeriodo, descricao, cargaHorariaTeoria,
+					tipoSalaTeoria, cargaHorariaPratica, tipoSalaPratica));
+		}
+		return discRetorno;
+	}
+
+	public int removeDisciplinaCromossomo(int codigoDisciplina) {
+		int contRemocao = 0;
+		for (int i = 0; i < 169; i++) {
+			if (cromossomoHash.get(i) != null) {
+				for (int j = 0; j < cromossomoHash.get(i).size(); j++) {
+					if (cromossomoHash.get(i).get(j).getDisciplina().getCodigo() == codigoDisciplina) {
+						cromossomoHash.get(i).remove(j);
+						contRemocao++;
+					}
+				}
+			}
+		}
+		return contRemocao;
 	}
 }

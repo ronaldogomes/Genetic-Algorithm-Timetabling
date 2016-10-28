@@ -32,7 +32,7 @@ public class XLS {
 	 * @param cromossomo
 	 */
 	public void insere(Cromossomo cromossomo) {
-		// Cria um novo arquivo
+		// Cria um novo arquivo 
 		File arquivo = new File(inputArquivo);
 		WorkbookSettings wbSettings = new WorkbookSettings();
 		wbSettings.setLocale(new Locale("pt", "BR"));
