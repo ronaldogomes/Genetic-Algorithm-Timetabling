@@ -243,7 +243,7 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexProfessor(int indexTimeSlot, int indexDisc) {
-		Integer indexProfessorGerado;
+		Integer indexProfessorGerado=null;
 		boolean x1, x2;
 		ArrayList<Professor> professoresDisp = new ArrayList<>();
 		//varrendo o arrayList professores
@@ -251,11 +251,10 @@ public class Cromossomo {
 			// dado um professor fixo varrer as disciplinas que ele pode ministrar 
 			for (int j = 0; j < Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().size(); j++) {
 				//teste para ver a validade da disciplina quanto ao professor
-				
 				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == Arquivo.disciplinasEMC
 						.get(indexDisc).getCodigo()) {
-					//fixado o professor, varrer as listas de horarios(fixa e dinamica) que ele esta ocupado
 					
+					//fixado o professor, varrer as listas de horarios(fixa e dinamica) que ele esta ocupado
 					for (int j2 = 0; j2 < Arquivo.professoresEMC.get(i).getListaTSIndFixa().size(); j2++) {
 						if (Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2).getCodigo() != Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()){
 							//se os horarios da lista for diferente do horario escolhido, adiciona o professor em uma lista de professores validos	
@@ -276,7 +275,11 @@ public class Cromossomo {
 			}
 		}
 		//na hoora do retorno resolver null e LEMBRAR DE ADICIONAR
-		indexProfessorGerado=Arquivo.professoresEMC.indexOf(Arquivo.professoresEMC.indexOf(professoresDisp.get(aleatorio.nextInt(professoresDisp.size()))));
+		Professor profGerado = professoresDisp.get(aleatorio.nextInt(professoresDisp.size()));
+		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
+			if(profGerado.getCodigo()==Arquivo.professoresEMC.get(i).getCodigo())
+				indexProfessorGerado=i;
+		}
 		if(indexProfessorGerado!=null){
 			Arquivo.professoresEMC.get(indexProfessorGerado).getListaTSIndDinamic().add(indexTimeSlot);
 		}
