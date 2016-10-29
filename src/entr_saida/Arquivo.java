@@ -9,25 +9,29 @@ import emc.TimeSlots;
 import emc.TipoSala;
 import genetic.Cromossomo;
 
+import java.io.File;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Calendar;
 
-import javax.swing.plaf.SliderUI;
+import jxl.write.*;
 
 public class Arquivo {
 	static Arquivo arquivo = new Arquivo();
 	public static ArrayList<Curso> cursosEMC;
-	public static ArrayList<Disciplina> disciplinasEMC ;
-	public static ArrayList<Estudante> alunosEMC ;
-	public static ArrayList<Professor> professoresEMC ;
+	public static ArrayList<Disciplina> disciplinasEMC;
+	public static ArrayList<Estudante> alunosEMC;
+	public static ArrayList<Professor> professoresEMC;
 	public static ArrayList<Sala> salasEMC;
 	public static ArrayList<TimeSlots> listaTimeSlots;
 	public static ArrayList<TipoSala> tipoSalaEMC;
-	
+
 	/**
 	 * 
 	 * @param nome
@@ -112,7 +116,7 @@ public class Arquivo {
 							Integer codigo = Integer.parseInt(infgormEntrArq.get(i).split(",")[0]);
 							Integer codDiaSemana = Integer.parseInt(infgormEntrArq.get(i).split(",")[1]);
 							String horaIncioFim = infgormEntrArq.get(i).split(",")[2] + ","
-									+ infgormEntrArq.get(i).split(",")[2];
+									+ infgormEntrArq.get(i).split(",")[3];
 							listaTimeSlots.add(new TimeSlots(codigo, codDiaSemana, horaIncioFim));
 						}
 						i++;
@@ -174,8 +178,8 @@ public class Arquivo {
 								"\\s{0,}\\d{1,3}\\s{0,},\\s{0,}[\\w|\\W|\\d]{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
 							ArrayList<Disciplina> disciplinasCursar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasCursar.add(Disciplina.qualDisciplina(
-										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+								disciplinasCursar.add(Disciplina
+										.qualDisciplina(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							alunosEMC.add(new Estudante(Integer.parseInt(infgormEntrArq.get(i).split(",")[0].trim()),
 									infgormEntrArq.get(i).split(",")[1].trim(), disciplinasCursar));
@@ -190,8 +194,8 @@ public class Arquivo {
 							String nome = infgormEntrArq.get(i).split(",")[1].trim();
 							ArrayList<Disciplina> disciplinasMinistrar = new ArrayList<Disciplina>();
 							for (int j = 2; j < infgormEntrArq.get(i).split(",").length; j++) {
-								disciplinasMinistrar.add(Disciplina.qualDisciplina(
-										Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
+								disciplinasMinistrar.add(Disciplina
+										.qualDisciplina(Integer.parseInt(infgormEntrArq.get(i).split(",")[j].trim())));
 							}
 							professoresEMC.add(new Professor(codigo, nome, disciplinasMinistrar));
 						}
@@ -203,7 +207,8 @@ public class Arquivo {
 	}
 
 	public static void restricoesAg() {
-		ArrayList<String> restricoesEntrArq = arquivo.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
+		ArrayList<String> restricoesEntrArq = arquivo
+				.lerArquivo("../Genetic-Algorithm-Timetabling/files/ag-restricoes.csv");
 		for (int i = 0; i < restricoesEntrArq.size(); i++) {
 			if (!(restricoesEntrArq.get(i).matches("//.{0,}"))) {
 
@@ -212,10 +217,11 @@ public class Arquivo {
 					do {
 						if (restricoesEntrArq.get(i)
 								.matches("\\s{0,}\\d{1,}\\s{0,}[,\\s{0,}\\d{1,3}\\s{0,}|,\\s{0,}]{0,}")) {
-							Disciplina discTemp = Disciplina.qualDisciplina(Integer.parseInt(restricoesEntrArq.get(i).split(",")[0].trim()));
+							Disciplina discTemp = Disciplina
+									.qualDisciplina(Integer.parseInt(restricoesEntrArq.get(i).split(",")[0].trim()));
 							ArrayList<Integer> discSlotObr = new ArrayList<>();
 							for (int j = 1; j < restricoesEntrArq.get(i).split(",").length; j++) {
-									discSlotObr.add(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim()));								
+								discSlotObr.add(Integer.parseInt(restricoesEntrArq.get(i).split(",")[j].trim()));
 							}
 							discTemp.setSlotObr(discSlotObr);
 						}
@@ -241,5 +247,15 @@ public class Arquivo {
 				}
 			}
 		}
+	}
+
+	public static void salvaXLS(Cromossomo cromossomo) {
+		XLS exemplo = new XLS();
+			String fileName = "../Genetic-Algorithm-Timetabling/files/cromossomo"+new SimpleDateFormat("_dd.MM.yyyy_HH.mm.ss").format(Calendar.getInstance().getTime())+".xls";
+			exemplo.setOutputFile(fileName);
+			exemplo.insere(cromossomo);
+
+
+
 	}
 }
