@@ -31,23 +31,18 @@ public class Cromossomo {
 		ArrayList<Estudante> alunos;
 		disciplinasTemp = copyArrayListDisc(Arquivo.disciplinasEMC);
 		int i = 0;
-		int contIncDiscCrom = 0;
-		int indexDiscAnt = -1;
 		boolean manterLupDisc;
 		// carregando cromossomo
 		int indexProf, indexSala, indexDisc, indexCurso;
 		int indexTSlot;
+		int controlCargaHorariaDisc[][];
 		do {
+			int posicaoControl = 0;
 			indexDisc = geraIndexDisc();
-
-			Disciplina copyDisc = new Disciplina(disciplinasTemp.get(indexDisc).getCodigo(),
-					disciplinasTemp.get(indexDisc).getCodigoCurso(), disciplinasTemp.get(indexDisc).getCodigPeriodo(),
-					disciplinasTemp.get(indexDisc).getDescricao(),
-					disciplinasTemp.get(indexDisc).getCargaHorariaTeorica(),
-					disciplinasTemp.get(indexDisc).getTipoSalaTeoria(),
-					disciplinasTemp.get(indexDisc).getCargaHorariaPratica(),
-					disciplinasTemp.get(indexDisc).getTipoSalaPratica());
-
+			int cargaHorariaTeorica = disciplinasTemp.get(indexDisc).getCargaHorariaTeorica();
+			int cargaHorariaPratica = disciplinasTemp.get(indexDisc).getCargaHorariaPratica();
+			int qtdLinhas = cargaHorariaPratica + cargaHorariaTeorica;
+			controlCargaHorariaDisc = new int[qtdLinhas][4];
 			// PREENCHER TODA CARGA HORARIA DA DISCIPLINA
 			do {
 				indexTSlot = geraIndexTimeSlot();
@@ -55,43 +50,50 @@ public class Cromossomo {
 				indexCurso = disciplinasTemp.get(indexDisc).getCodigoCurso() - 1;
 				indexProf = geraIndexProfessor(indexTSlot, indexDisc);
 				if (indexProf == -1) {
-					indexDiscAnt = indexDisc;
-					contIncDiscCrom++;
 					break;
-				} else
-					contIncDiscCrom = 0;
+				}
 				indexSala = geraIndexSala(indexTSlot, indexDisc);
-				alunos = geraArrayAlunos(indexTSlot, indexDisc);
-				if (insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf),
-						Arquivo.salasEMC.get(indexSala), disciplinasTemp.get(indexDisc), alunos,
-						Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), indexTSlot)) {
-
-					if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala)
-							.getTipoSala().getCodigo())
-							&& (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
-						// decrementa CHT
-						decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 1);
-					} else if (disciplinasTemp.get(indexDisc).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
-							.getTipoSala().getCodigo() && disciplinasTemp.get(indexDisc).getCargaHorariaPratica() > 0) {
-						// decrementa CHP
-						decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 2);
-
-					}
+				if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
+						.getCodigo()) && (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
+					decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 1);
+					controlCargaHorariaDisc[posicaoControl][0] = indexTSlot;
+					controlCargaHorariaDisc[posicaoControl][1] = indexProf;
+					controlCargaHorariaDisc[posicaoControl][2] = indexSala;
+					posicaoControl++;
+				} else if (disciplinasTemp.get(indexDisc).getTipoSalaPratica() == Arquivo.salasEMC.get(indexSala)
+						.getTipoSala().getCodigo() && disciplinasTemp.get(indexDisc).getCargaHorariaPratica() > 0) {
+					// decrementa CHP
+					decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 2);
+					controlCargaHorariaDisc[posicaoControl][0] = indexTSlot;
+					controlCargaHorariaDisc[posicaoControl][1] = indexProf;
+					controlCargaHorariaDisc[posicaoControl][2] = indexSala;
+					posicaoControl++;
 				}
-				if (disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0
-						&& disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0) {
-					manterLupDisc = false;
-					disciplinasTemp.remove(indexDisc);
-				}
+				if (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0
+						&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0) 
+					manterLupDisc=false;
+				
 			} while (manterLupDisc);
-			if (contIncDiscCrom > 0) {
-				disciplinasTemp.set(indexDisc, copyDisc);
-				System.out.println(removeDisciplinaCromossomo(disciplinasTemp.get(indexDisc).getCodigo()));
+
+			if (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0
+					&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0) {
+				// resetar CHT e CHP
+				disciplinasTemp.get(indexDisc).setCargaHorariaTeorica(cargaHorariaTeorica);
+				disciplinasTemp.get(indexDisc).setCargaHorariaPratica(cargaHorariaPratica);
+				// gerar ArrayList de Estudante
+				alunos = new ArrayList<>();
+				// Inserir Disciplina no cromossomo
+				for(int j=0;j<controlCargaHorariaDisc.length;j++){
+				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(controlCargaHorariaDisc[j][1]), Arquivo.salasEMC.get(controlCargaHorariaDisc[j][3]),
+						disciplinasTemp.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]),
+						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]).getCodigo());
+				}
+				// remover disciplina de displinasTemp
+				disciplinasTemp.remove(indexDisc);
+
 			}
-			contIncDiscCrom = 0;
-
 			i++;
-
+			System.out.println(i);
 		} while (disciplinasTemp.size() > 0 && i < 500);
 		// verdadeiro verdadeiro = falso
 	}
@@ -248,38 +250,41 @@ public class Cromossomo {
 			for (int j = 0; j < Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().size(); j++) {
 				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == disciplinasTemp
 						.get(indexDisc).getCodigo()) {
-					//se a lista de horarios indisponiveis do professor não está vazia
-					if (Arquivo.professoresEMC.get(i).getListaTSIndFixa()!=null) {
+					// se a lista de horarios indisponiveis do professor não
+					// está vazia
+					if (Arquivo.professoresEMC.get(i).getListaTSIndFixa() != null) {
 						for (int j2 = 0; j2 < Arquivo.professoresEMC.get(i).getListaTSIndFixa().size(); j2++) {
-							if(Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2).getCodigo()!=Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()){
-								indexProfTSDispTotal.add(i);//A
+							if (Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2)
+									.getCodigo() != Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()) {
+								indexProfTSDispTotal.add(i);// A
 								break;
 							}
 						}
-					}else indexProfTSDispTotal.add(i);break; //se está vazia
+					} else
+						indexProfTSDispTotal.add(i);
+					break; // se está vazia
 				}
 			}
 
 		}
 		for (int i = 0; i < 169; i++) {
-			if(cromossomoHash.get(i)!=null){
-				for(int j=0;j<cromossomoHash.get(i).size();j++){
-					for(int j2 =0;j2<indexProfTSDispTotal.size();j2++){
-						if( cromossomoHash.get(i).get(j).getProfessor().getCodigo()==Arquivo.professoresEMC.get(indexProfTSDispTotal.get(j2)).getCodigo()){
+			if (cromossomoHash.get(i) != null) {
+				for (int j = 0; j < cromossomoHash.get(i).size(); j++) {
+					for (int j2 = 0; j2 < indexProfTSDispTotal.size(); j2++) {
+						if (cromossomoHash.get(i).get(j).getProfessor().getCodigo() == Arquivo.professoresEMC
+								.get(indexProfTSDispTotal.get(j2)).getCodigo()) {
 							indexProfTSDispTotal.remove(j2);
 							break;
 						}
 					}
-						
-					
+
 				}
 			}
 		}
-		
-		System.out.println(indexProfTSDispTotal.size()==0);
-		if(indexProfTSDispTotal.size()==0)
-			return-1;
-		
+
+		if (indexProfTSDispTotal.size() == 0)
+			return -1;
+
 		return indexProfTSDispTotal.get(aleatorio.nextInt(indexProfTSDispTotal.size()));
 	}
 
