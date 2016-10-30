@@ -65,7 +65,7 @@ public class Cromossomo {
 				if (insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(indexProf),
 						Arquivo.salasEMC.get(indexSala), disciplinasTemp.get(indexDisc), alunos,
 						Arquivo.listaTimeSlots.get(indexTSlot), Arquivo.cursosEMC.get(indexCurso)), indexTSlot)) {
-					
+
 					if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala)
 							.getTipoSala().getCodigo())
 							&& (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
@@ -243,34 +243,44 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexProfessor(int indexTimeSlot, int indexDisc) {
-		Integer indexProfessorGerado=null;
-		boolean x1, x2;
-		ArrayList<Professor> professoresDisp = new ArrayList<>();
-		//varrendo o arrayList professores
+		ArrayList<Integer> indexProfTSDispTotal = new ArrayList<>();
 		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
-			// dado um professor fixo varrer as disciplinas que ele pode ministrar 
 			for (int j = 0; j < Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().size(); j++) {
-				//professores que ministra essa disciplina
-				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == Arquivo.disciplinasEMC
+				if (Arquivo.professoresEMC.get(i).getDisciplinasMinistrar().get(j).getCodigo() == disciplinasTemp
 						.get(indexDisc).getCodigo()) {
-					//até aqui esse arrayList de professores que ministram essa disciplina
-					professoresDisp.add(Arquivo.professoresEMC.get(i));
-					
+					//se a lista de horarios indisponiveis do professor não está vazia
+					if (Arquivo.professoresEMC.get(i).getListaTSIndFixa()!=null) {
+						for (int j2 = 0; j2 < Arquivo.professoresEMC.get(i).getListaTSIndFixa().size(); j2++) {
+							if(Arquivo.professoresEMC.get(i).getListaTSIndFixa().get(j2).getCodigo()!=Arquivo.listaTimeSlots.get(indexTimeSlot).getCodigo()){
+								indexProfTSDispTotal.add(i);//A
+								break;
+							}
+						}
+					}else indexProfTSDispTotal.add(i);break; //se está vazia
+				}
+			}
+
+		}
+		for (int i = 0; i < 169; i++) {
+			if(cromossomoHash.get(i)!=null){
+				for(int j=0;j<cromossomoHash.get(i).size();j++){
+					for(int j2 =0;j2<indexProfTSDispTotal.size();j2++){
+						if( cromossomoHash.get(i).get(j).getProfessor().getCodigo()==Arquivo.professoresEMC.get(indexProfTSDispTotal.get(j2)).getCodigo()){
+							indexProfTSDispTotal.remove(j2);
+							break;
+						}
+					}
+						
 					
 				}
 			}
 		}
-		System.out.println(professoresDisp.size());
-		//na hoora do retorno resolver null e LEMBRAR DE ADICIONAR
-		Professor profGerado = professoresDisp.get(aleatorio.nextInt(professoresDisp.size()));
-		for (int i = 0; i < Arquivo.professoresEMC.size(); i++) {
-			if(profGerado.getCodigo()==Arquivo.professoresEMC.get(i).getCodigo())
-				indexProfessorGerado=i;
-		}
-		if(indexProfessorGerado!=null){
-			Arquivo.professoresEMC.get(indexProfessorGerado).getListaTSIndDinamic().add(indexTimeSlot);
-		}
-		return indexProfessorGerado ;
+		
+		System.out.println(indexProfTSDispTotal.size()==0);
+		if(indexProfTSDispTotal.size()==0)
+			return-1;
+		
+		return indexProfTSDispTotal.get(aleatorio.nextInt(indexProfTSDispTotal.size()));
 	}
 
 	/**
