@@ -22,20 +22,26 @@ public class Teste {
 		System.out.println(Arquivo.disciplinasEMC.size());
 		System.out.println("criando cromossomo...");
 		Cromossomo cromo1 = new Cromossomo();
-		
+
 		Arquivo.salvaXLS(cromo1);
 		System.out.println(" cromossomo criado");
-		System.out.println(cromo1.disciplinasTemp.size()+" DISCIPLINAS NÃO ALOCADAS");
-//		for (int i = 0; i < cromo1.disciplinasTemp.size(); i++) {
-//			System.out.println(cromo1.disciplinasTemp.get(i).getDescricao());
-//		}
+		System.out.println(cromo1.disciplinasTemp.size() + " DISCIPLINAS NÃO ALOCADAS");
+		for (int i = 0; i < 169; i++) {
+			if (cromo1.getCromossomoHash().get(i) != null) {
+				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
+
+					System.out.println(
+							cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " TS: " + i+" Periodo:  "+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigPeriodo()+" Curso: "+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigoCurso());
+
+				}
+			}
+		}
+
 	}
 
 	//
 	// METODOS
 	//
-
-
 
 	public static void validaCromossomo(Cromossomo cromossomo) {
 		boolean cromossomoValido = true;
@@ -65,8 +71,10 @@ public class Teste {
 		for (int i = 0; i < disciplinas.size(); i++) {
 			System.out.println(disciplinas.get(i).getCodigo() + "," + disciplinas.get(i).getCodigoCurso() + ","
 					+ disciplinas.get(i).getCodigPeriodo() + "," + disciplinas.get(i).getDescricao() + ",CHT:"
-					+ disciplinas.get(i).getCargaHorariaTeorica() + "," /*+ disciplinas.get(i).getTipoSalaTeoria() */+ ",CHP: "
-					+ disciplinas.get(i).getCargaHorariaPratica() + ", " /*+ disciplinas.get(i).getTipoSalaPratica()*/);
+					+ disciplinas.get(i).getCargaHorariaTeorica()
+					+ "," /* + disciplinas.get(i).getTipoSalaTeoria() */ + ",CHP: "
+					+ disciplinas.get(i).getCargaHorariaPratica()
+					+ ", " /* + disciplinas.get(i).getTipoSalaPratica() */);
 		}
 
 	}

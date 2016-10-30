@@ -1,5 +1,6 @@
 package genetic;
 
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Random;
@@ -45,15 +46,15 @@ public class Cromossomo {
 			controlCargaHorariaDisc = new int[qtdLinhas][4];
 			// PREENCHER TODA CARGA HORARIA DA DISCIPLINA
 			do {
-				indexTSlot = geraIndexTimeSlot();
+				indexTSlot = geraIndexTimeSlot(indexDisc);
 				manterLupDisc = true;
 				indexCurso = disciplinasTemp.get(indexDisc).getCodigoCurso() - 1;
 				indexProf = geraIndexProfessor(indexTSlot, indexDisc);
 				indexSala = geraIndexSala(indexTSlot, indexDisc);
-				if (indexProf == -1 || isDiscMemsmoPeriodo(indexDisc, indexTSlot)) {
-					// resetar CHT e CHP
+				if (indexProf == -1) {
 					break;
 				}
+				
 				if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 						.getCodigo()) && (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
 					decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 1);
@@ -78,14 +79,13 @@ public class Cromossomo {
 
 			if (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0
 					&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0) {
-
 				// gerar ArrayList de Estudante
 				alunos = new ArrayList<>();
 				// resetar CHT e CHP
 				disciplinasTemp.get(indexDisc).setCargaHorariaTeorica(cargaHorariaTeorica);
 				disciplinasTemp.get(indexDisc).setCargaHorariaPratica(cargaHorariaPratica);
 				// Inserir Disciplina no cromossomo
-				System.out.println(" "+disciplinasTemp.get(indexDisc).getDescricao()+" "+controlCargaHorariaDisc[controlCargaHorariaDisc.length-1][1]);
+				//System.out.println(controlCargaHorariaDisc.length+" "+disciplinasTemp.get(indexDisc).getDescricao());
 				for (int j = 0; j < controlCargaHorariaDisc.length; j++) {
 					insereGeneInCromossomo(
 							new Gene(Arquivo.professoresEMC.get(controlCargaHorariaDisc[j][1]),
@@ -322,11 +322,25 @@ public class Cromossomo {
 	 *         disciplinas simultaneas]
 	 *         </p>
 	 */
-	public int geraIndexTimeSlot() {
+	public int geraIndexTimeSlot(int indexDisc) {
 		int indexTSGerado;
+		boolean manterLupeDisc;
 		do {
+			manterLupeDisc=false;
 			indexTSGerado = aleatorio.nextInt(Arquivo.listaTimeSlots.size());
-		} while (!validaTS(indexTSGerado));
+			for (int i = 0; i < 169; i++) {
+				if(cromossomoHash.get(i)!=null){
+					for (int j = 0; j < cromossomoHash.get(i).size(); j++) {
+						if(cromossomoHash.get(i).get(j).getDisciplina().getCodigo()==disciplinasTemp.get(indexDisc).getCodigo()){
+							manterLupeDisc=true;
+							break;
+						}
+					}
+				}
+			}
+			
+			
+		} while ((!validaTS(indexTSGerado) && !manterLupeDisc));
 		return indexTSGerado;
 	}
 

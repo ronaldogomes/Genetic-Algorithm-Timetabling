@@ -45,7 +45,7 @@ public class Gene {
 		String retorno = this.getSala().getDescricao() + " " + this.getDisciplina().getDescricao() + "   "
 				+ this.getProfessor().getNome() + "  " + this.getTimeslots().getHora() + "  DS "
 				+ this.getTimeslots().getCodDiaSemana() + " CHP: " + this.getDisciplina().getCargaHorariaPratica()
-				+ " CHT: " + this.disciplina.getCargaHorariaTeorica()+" CURSO: "+this.disciplina.getCodigoCurso()+"TS "+timeslots.getCodDiaSemana();
+				+ " CHT: " + this.disciplina.getCargaHorariaTeorica()+" CURSO: "+this.disciplina.getCodigoCurso()+"TS "+timeslots.getCodigo();
 		return retorno;
 	}
 
