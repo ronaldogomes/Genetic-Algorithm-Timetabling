@@ -49,10 +49,11 @@ public class Cromossomo {
 				manterLupDisc = true;
 				indexCurso = disciplinasTemp.get(indexDisc).getCodigoCurso() - 1;
 				indexProf = geraIndexProfessor(indexTSlot, indexDisc);
-				if (indexProf == -1) {
+				indexSala = geraIndexSala(indexTSlot, indexDisc);
+				if (indexProf == -1 || isDiscMemsmoPeriodo(indexDisc, indexTSlot)) {
+					// resetar CHT e CHP
 					break;
 				}
-				indexSala = geraIndexSala(indexTSlot, indexDisc);
 				if ((disciplinasTemp.get(indexDisc).getTipoSalaTeoria() == Arquivo.salasEMC.get(indexSala).getTipoSala()
 						.getCodigo()) && (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() > 0)) {
 					decrementaCargaHoraria(disciplinasTemp.get(indexDisc), 1);
@@ -70,32 +71,53 @@ public class Cromossomo {
 					posicaoControl++;
 				}
 				if (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0
-						&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0) 
-					manterLupDisc=false;
-				
+						&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0)
+					manterLupDisc = false;
+
 			} while (manterLupDisc);
 
 			if (disciplinasTemp.get(indexDisc).getCargaHorariaTeorica() == 0
 					&& disciplinasTemp.get(indexDisc).getCargaHorariaPratica() == 0) {
+
+				// gerar ArrayList de Estudante
+				alunos = new ArrayList<>();
 				// resetar CHT e CHP
 				disciplinasTemp.get(indexDisc).setCargaHorariaTeorica(cargaHorariaTeorica);
 				disciplinasTemp.get(indexDisc).setCargaHorariaPratica(cargaHorariaPratica);
-				// gerar ArrayList de Estudante
-				alunos = new ArrayList<>();
 				// Inserir Disciplina no cromossomo
-				for(int j=0;j<controlCargaHorariaDisc.length;j++){
-				insereGeneInCromossomo(new Gene(Arquivo.professoresEMC.get(controlCargaHorariaDisc[j][1]), Arquivo.salasEMC.get(controlCargaHorariaDisc[j][3]),
-						disciplinasTemp.get(indexDisc), alunos, Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]),
-						Arquivo.cursosEMC.get(indexCurso)), Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]).getCodigo());
+				System.out.println(" "+disciplinasTemp.get(indexDisc).getDescricao()+" "+controlCargaHorariaDisc[controlCargaHorariaDisc.length-1][1]);
+				for (int j = 0; j < controlCargaHorariaDisc.length; j++) {
+					insereGeneInCromossomo(
+							new Gene(Arquivo.professoresEMC.get(controlCargaHorariaDisc[j][1]),
+									Arquivo.salasEMC.get(controlCargaHorariaDisc[j][3]), disciplinasTemp.get(indexDisc),
+									alunos, Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]),
+									Arquivo.cursosEMC.get(indexCurso)),
+							Arquivo.listaTimeSlots.get(controlCargaHorariaDisc[j][0]).getCodigo());
 				}
 				// remover disciplina de displinasTemp
 				disciplinasTemp.remove(indexDisc);
 
+			}else{
+				disciplinasTemp.get(indexDisc).setCargaHorariaTeorica(cargaHorariaTeorica);
+				disciplinasTemp.get(indexDisc).setCargaHorariaPratica(cargaHorariaPratica);
 			}
 			i++;
-			System.out.println(i);
+
 		} while (disciplinasTemp.size() > 0 && i < 500);
 		// verdadeiro verdadeiro = falso
+	}
+
+	private boolean isDiscMemsmoPeriodo(int indexDisc, int indexTSlot) {
+		for (int i = 0; i < 169; i++) {
+			if(cromossomoHash.get(i)!=null){
+				for (int j = 0; j < cromossomoHash.get(i).size(); j++) {
+					if(cromossomoHash.get(i).get(j).getDisciplina().getCodigo()==disciplinasTemp.get(indexDisc).getCodigo()){
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	private ArrayList<Estudante> geraArrayAlunos(int indexTSlot, int indexDisc) {
@@ -196,7 +218,9 @@ public class Cromossomo {
 	 *         </p>
 	 */
 	public int geraIndexDisc() {
-		return aleatorio.nextInt(disciplinasTemp.size());
+		int indexDisc;
+		indexDisc = aleatorio.nextInt(disciplinasTemp.size());
+		return indexDisc;
 	}
 
 	/**
@@ -358,10 +382,7 @@ public class Cromossomo {
 	 *         constraints de curso
 	 *         </p>
 	 */
-	public int geraIndexCurso() {
-		// IMPLEMENTAR AS HARD CONSTRAINTS
-		return aleatorio.nextInt(Arquivo.cursosEMC.size());
-	}
+
 
 	public ArrayList<Disciplina> copyArrayListDisc(ArrayList<Disciplina> disc) {
 		int codigo, codigoCurso, codigoPeriodo, cargaHorariaTeoria, tipoSalaTeoria, cargaHorariaPratica,
