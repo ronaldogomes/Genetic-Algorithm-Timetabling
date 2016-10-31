@@ -7,7 +7,9 @@ import emc.Disciplina;
 import emc.Estudante;
 import emc.Professor;
 import emc.Sala;
+import emc.TimeSlots;
 import emc.TipoSala;
+import genetic.Avaliacao;
 import genetic.Cromossomo;
 
 public class Teste {
@@ -22,20 +24,22 @@ public class Teste {
 		System.out.println(Arquivo.disciplinasEMC.size());
 		System.out.println("criando cromossomo...");
 		Cromossomo cromo1 = new Cromossomo();
-
+		System.out.println(Avaliacao.isCromossomoValido(cromo1));
 		Arquivo.salvaXLS(cromo1);
 		System.out.println(" cromossomo criado");
 		System.out.println(cromo1.disciplinasTemp.size() + " DISCIPLINAS NÃO ALOCADAS");
-		for (int i = 0; i < 169; i++) {
-			if (cromo1.getCromossomoHash().get(i) != null) {
-				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
-
-					System.out.println(
-							cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " TS: " + i+" Periodo:  "+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigPeriodo()+" Curso: "+cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigoCurso());
-
-				}
-			}
-		}
+//		for (int i = 0; i < 169; i++) {
+//			if (cromo1.getCromossomoHash().get(i) != null) {
+//				for (int j = 0; j < cromo1.getCromossomoHash().get(i).size(); j++) {
+//
+//					System.out.println(cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getDescricao() + " TS: "
+//							+ i + " Periodo:  "
+//							+ cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigPeriodo() + " Curso: "
+//							+ cromo1.getCromossomoHash().get(i).get(j).getDisciplina().getCodigoCurso()+" prof: "+cromo1.getCromossomoHash().get(i).get(j).getProfessor().getNome());
+//
+//				}
+//			}
+//		}
 
 	}
 
@@ -108,10 +112,9 @@ public class Teste {
 		}
 	}
 
-	public static void imprimeArrayTimesSlots(ArrayList<TipoSala> timeSlots) {
+	public static void imprimeArrayTimesSlots(ArrayList<TimeSlots> timeSlots) {
 		for (int i = 0; i < timeSlots.size(); i++) {
-			System.out.println(timeSlots.get(i).getCodigo() + "," + timeSlots.get(i).getDescricao() + ","
-					+ timeSlots.get(i) + " configurar horairo de inicio e fim");
+			System.out.println("indice " + i + "  " + timeSlots.get(i).getCodigo() );
 		}
 	}
 
